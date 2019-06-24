@@ -26,6 +26,6 @@
 
 * vscode不允许读取外部文件路径，所以只能自己去替换插件内的图片。替换步骤如下：
   
-  1、找到vscode插件安装的地方 (如mac 在~/.vscode/extensions/formulahendry.syz-{version})
+  1、找到vscode插件安装的地方 (如mac 在~/.vscode/extensions/kanbang.syz-{version})
   
   2、替换images/syz内图片

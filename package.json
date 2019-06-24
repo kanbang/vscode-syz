@@ -3,7 +3,7 @@
     "displayName": "燕姿鼓励师",
     "description": "写代码不再孤单，有孙燕姿与你同在",
     "version": "0.0.1",
-    "publisher": "dandanba",
+    "publisher": "kanbang",
     "icon": "logo.jpg",
     "engines": {
         "vscode": "^1.30.0"
@@ -17,13 +17,13 @@
         "鼓励"
     ],
     "bugs": {
-        "url": "https://github.com/formulahendry/vscode-syz/issues",
+        "url": "https://github.com/kanbang/vscode-syz/issues",
         "email": "kanbang@msn.com"
     },
-    "homepage": "https://github.com/formulahendry/vscode-syz/blob/master/README.md",
+    "homepage": "https://github.com/kanbang/vscode-syz/blob/master/README.md",
     "repository": {
         "type": "git",
-        "url": "https://github.com/formulahendry/vscode-syz.git"
+        "url": "https://github.com/kanbang/vscode-syz.git"
     },
     "activationEvents": [
         "onCommand:syz.showReminderView",
