@@ -8,37 +8,45 @@ export class ReminderView {
     public static show(context: vscode.ExtensionContext, ) {
         let asset: Asset = new Asset(context);
 
-        const imagePath = asset.getImageUri();
+        const strSlideSection = asset.getSlideSection();
         const title = asset.getTitle();
 
         if (this.panel) {
-            this.panel.webview.html = this.generateHtml(imagePath, title);
+            this.panel.webview.html = this.generateHtml(strSlideSection, title);
             this.panel.reveal();
         } else {
             this.panel = vscode.window.createWebviewPanel("syz", "孙燕姿", vscode.ViewColumn.Two, {
                 enableScripts: true,
                 retainContextWhenHidden: true,
             });
-            this.panel.webview.html = this.generateHtml(imagePath, title);
+            
+
+            this.panel.webview.html = this.generateHtml(strSlideSection, title);
             this.panel.onDidDispose(() => {
                 this.panel = undefined;
             });
         }
     }
 
-    protected static generateHtml(imagePath: vscode.Uri|string, title: string): string {
-        let html = `<!DOCTYPE html>
+    protected static generateHtml(strSlideSection: vscode.Uri|string, title: string): string {
+        let html = `<!doctype html>
         <html lang="en">
-        <head>
-            <meta charset="UTF-8">
-            <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <title>孙燕姿</title>
-        </head>
-        <body>
-            <div><h1>${title}</h1></div>
-            <div><img src="${imagePath}"></div>
-        </body>
-        </html>`;
+        <meta charset="utf-8">
+        <title>YOUR TITLE HERE</title>
+        <base target="_blank">
+        <!--link rel="icon" type="image/png" href="data:image/png;base64,YOUR-FAVICON-HERE"-->
+        <style>body,html{overflow:hidden;font-size:4vw;width:100%;height:100%;margin:0;padding:0}body.loaded{transition:.3s}body.loaded section{transition:opacity .5s}section{position:fixed;top:1vw;bottom:1vw;left:1vw;right:1vw;opacity:0}section:target{z-index:1}body:not(.muted) section:target{opacity:1}img{max-height:100%;max-width:100%}.incremental:not(.revealed){visibility:hidden}</style>
+        <style>
+            /* Your custom styles */
+            section {
+                /*background: transparent right bottom / 15vw auto no-repeat url("YOUR-LOGO.png");*/
+            }
+        </style>
+        
+        ${strSlideSection}
+        
+        <script>var slides,currentPageNumber,activeSlide,incremental,keyCodeNormalized,setPage,processHash,document_body,revealedCls="revealed",incrementalSelector=".incremental",querySelector="querySelector",loc=location,doc=document;document_body=doc.body,slides=Array.from(doc[querySelector+"All"]("section")),setPage=function(e){currentPageNumber=Math.min(slides.length,e||1),activeSlide=slides[currentPageNumber-1],slides.map.call(activeSlide[querySelector+"All"](incrementalSelector),function(e){e.classList.remove(revealedCls)}),loc.hash=currentPageNumber,document_body.style.background=activeSlide.dataset.bg||"",document_body.dataset.slideId=activeSlide.dataset.id||currentPageNumber},addEventListener("keydown",function(e,r){keyCodeNormalized=e.which-32,keyCodeNormalized&&keyCodeNormalized-2&&keyCodeNormalized-7&&keyCodeNormalized-8||(incremental=activeSlide[querySelector](incrementalSelector+":not(."+revealedCls+")"),incremental?incremental.classList.add(revealedCls):currentPageNumber>=slides.length?setPage(1):setPage(currentPageNumber+1),r=1),keyCodeNormalized-1&&keyCodeNormalized-5&&keyCodeNormalized-6||(setPage(currentPageNumber<=1?slides.length:currentPageNumber-1),r=1),keyCodeNormalized+5||(document_body.classList.toggle("muted"),r=1),keyCodeNormalized-4||(setPage(1),r=1),keyCodeNormalized-3||(setPage(1/0),r=1),r&&e.preventDefault()}),slides.map(function(e,r){e.id=r+1}),setInterval(processHash=function(e){e=loc.hash.substr(1),e!=currentPageNumber&&setPage(e)},99),processHash(),document_body.classList.add("loaded");</script>
+        <script>location.hash=Math.ceil(Math.random()*slides.length)</script>`;
 
         return html;
     }

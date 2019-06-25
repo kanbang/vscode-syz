@@ -1,84 +1,85 @@
 {
-    "name": "syz",
-    "displayName": "燕姿鼓励师",
-    "description": "写代码不再孤单，有孙燕姿与你同在",
-    "version": "0.0.1",
-    "publisher": "kanbang",
-    "icon": "logo.jpg",
-    "engines": {
-        "vscode": "^1.30.0"
-    },
-    "categories": [
-        "Other"
+  "name": "syz",
+  "displayName": "燕姿鼓励师",
+  "description": "写代码不再孤单，有孙燕姿与你同在",
+  "version": "0.0.2",
+  "publisher": "kanbang",
+  "icon": "logo.jpg",
+  "engines": {
+    "vscode": "^1.30.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "keywords": [
+    "孙燕姿",
+    "提醒",
+    "鼓励"
+  ],
+  "bugs": {
+    "url": "https://github.com/kanbang/vscode-syz/issues",
+    "email": "kanbang@msn.com"
+  },
+  "homepage": "https://github.com/kanbang/vscode-syz/blob/master/README.md",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kanbang/vscode-syz.git"
+  },
+  "activationEvents": [
+    "onCommand:syz.showReminderView",
+    "*"
+  ],
+  "main": "./out/extension",
+  "contributes": {
+    "commands": [
+      {
+        "command": "syz.showReminderView",
+        "title": "打开提醒页面",
+        "category": "syz"
+      }
     ],
-    "keywords": [
-        "孙燕姿",
-        "提醒",
-        "鼓励"
-    ],
-    "bugs": {
-        "url": "https://github.com/kanbang/vscode-syz/issues",
-        "email": "kanbang@msn.com"
-    },
-    "homepage": "https://github.com/kanbang/vscode-syz/blob/master/README.md",
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/kanbang/vscode-syz.git"
-    },
-    "activationEvents": [
-        "onCommand:syz.showReminderView",
-        "*"
-    ],
-    "main": "./out/extension",
-    "contributes": {
-        "commands": [
-            {
-                "command": "syz.showReminderView",
-                "title": "打开提醒页面",
-                "category": "syz"
-            }
-        ],
-        "configuration": {
-            "type": "object",
-            "title": "孙燕姿",
-            "properties": {
-                "syz.reminderViewIntervalInMinutes": {
-                    "type": "number",
-                    "default": 60,
-                    "description": "展示提醒页面的时间间隔（分钟）"
-                },
-                "syz.title": {
-                    "type": "string",
-                    "default": "小哥哥，小哥哥，代码写久了，该休息啦~",
-                    "description": "页面内展示文字"
-                },
-                "syz.type": {
-                    "type": "string",
-                    "default": "default",
-                    "description": "类型：default:默认图；url：网络图"
-                },
-                "syz.customImages": {
-                    "type": "array",
-                    "default": [
-                        "http://b-ssl.duitang.com/uploads/item/201806/04/20180604090459_gqqjo.jpg"
-                    ],
-                    "description": "用户设置图片地址"
-                }
-            }
+    "configuration": {
+      "type": "object",
+      "title": "孙燕姿",
+      "properties": {
+        "syz.reminderViewIntervalInMinutes": {
+          "type": "number",
+          "default": 60,
+          "description": "展示提醒页面的时间间隔（分钟）"
+        },
+        "syz.title": {
+          "type": "string",
+          "default": "小哥哥，小哥哥，代码写久了，该休息啦~",
+          "description": "页面内展示文字"
+        },
+        "syz.type": {
+          "type": "string",
+          "default": "default",
+          "description": "类型：default:默认图；url：网络图"
+        },
+        "syz.customImages": {
+          "type": "array",
+          "default": [
+            "http://b-ssl.duitang.com/uploads/item/201806/04/20180604090459_gqqjo.jpg"
+          ],
+          "description": "用户设置图片地址"
         }
-    },
-    "scripts": {
-        "vscode:prepublish": "npm run compile",
-        "compile": "tsc -p ./",
-        "watch": "tsc -watch -p ./",
-        "postinstall": "node ./node_modules/vscode/bin/install",
-        "test": "npm run compile && node ./node_modules/vscode/bin/test"
-    },
-    "devDependencies": {
-        "typescript": "^2.6.1",
-        "vscode": "^1.1.21",
-        "tslint": "^5.8.0",
-        "@types/node": "^8.10.25",
-        "@types/mocha": "^2.2.42"
+      }
     }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "postinstall": "node ./node_modules/vscode/bin/install",
+    "test": "npm run compile && node ./node_modules/vscode/bin/test"
+  },
+  "devDependencies": {
+    "typescript": "^2.6.1",
+    "vscode": "^1.1.21",
+    "tslint": "^5.8.0",
+    "@types/node": "^8.10.25",
+    "@types/mocha": "^2.2.42"
+  },
+  "__npminstall_done": false
 }

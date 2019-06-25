@@ -10,8 +10,9 @@ export default class Asset {
     public constructor(private context: vscode.ExtensionContext) {
     }
 
-    public getImageUri(): vscode.Uri | string {
+    public getSlideSection(): string {
         const type: string = this.getConfigType();
+        
         let images: vscode.Uri[] | string[];
 
         if (type === this.TYPE_URL_IMAGE) {
@@ -19,18 +20,24 @@ export default class Asset {
         } else {
             images = this.getDefaultImages();
         }
+
         // user forget setting customImages, get default images
         if (images.length === 0) {
             images = this.getDefaultImages();
         }
-        const image = this.getRandomOne(images);
 
-        return image;
-    }
+        let strSlide = "";
 
-    protected getRandomOne(images: string[] | vscode.Uri[]): string | vscode.Uri {
-        const n = Math.floor(Math.random() * images.length + 1) - 1;
-        return images[n];
+        for(var i=0; i<images.length; ++i)
+        {
+            strSlide += `
+            <section class="centering-wrapper">
+            <img class="v-centered" src="${images[i]}">
+            </section>
+        `;
+        }
+ 
+        return strSlide;
     }
 
     protected getDefaultImages(): vscode.Uri[] {
