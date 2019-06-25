@@ -41,6 +41,7 @@ export class ReminderView {
             section {
                 /*background: transparent right bottom / 15vw auto no-repeat url("YOUR-LOGO.png");*/
             }
+            p {  line-height:1; font-size:18px; margin-top:8px; color:lightgray; font-family: 'Microsoft YaHei','SF Pro Display',Arial,'PingFang SC',sans-serif }
         </style>
         
         ${strSlideSection}

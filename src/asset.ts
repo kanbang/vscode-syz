@@ -26,15 +26,31 @@ export default class Asset {
             images = this.getDefaultImages();
         }
 
+        const title = this.getTitle();
+
         let strSlide = "";
 
         for(var i=0; i<images.length; ++i)
         {
-            strSlide += `
-            <section class="centering-wrapper">
-            <img class="v-centered" src="${images[i]}">
-            </section>
-        `;
+            let str = images[i].toString().toLowerCase();
+            if(str.substring(str.length-4) == ".mp4" )
+            {
+                strSlide += `
+                <section class="centering-wrapper">
+                <p>${title}</p>
+                <video class="v-centered" src="${images[i]}" controls="controls">
+                </section>
+                `;
+            }
+            else
+            {
+                strSlide += `
+                <section class="centering-wrapper">
+                <p>${title}</p>
+                <img class="v-centered" src="${images[i]}">
+                </section>
+                `;
+            }
         }
  
         return strSlide;
