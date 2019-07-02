@@ -74,7 +74,7 @@ export default class Asset {
         return files;
     }
 
-    protected getDefaultsyzImagePath() {
+    public getDefaultsyzImagePath() {
         return path.join(this.context.extensionPath, 'images/syz');
     }
 

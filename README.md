@@ -26,6 +26,6 @@
 
 * vscode不允许读取外部文件路径，所以只能自己去替换插件内的图片。替换步骤如下：
   
-  1、找到vscode插件安装的地方 (如mac 在~/.vscode/extensions/kanbang.syz-{version})
+  1. 按 `F1`, 然后输入 `syzfolder: 打开照片文件夹，添加自己喜欢的照片`来打开图片文件夹
   
-  2、替换images/syz内图片
+  2. 替换文件夹内的图片

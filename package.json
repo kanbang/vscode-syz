@@ -2,7 +2,7 @@
   "name": "syz",
   "displayName": "燕姿鼓励师",
   "description": "写代码不再孤单，有孙燕姿与你同在",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "publisher": "kanbang",
   "icon": "logo.jpg",
   "engines": {
@@ -36,6 +36,11 @@
         "command": "syz.showReminderView",
         "title": "打开提醒页面",
         "category": "syz"
+      },
+      {
+        "command": "syz.openPhotoFolder",
+        "title": "打开照片文件夹，添加自己喜欢的照片",
+        "category": "syzfolder"
       }
     ],
     "configuration": {

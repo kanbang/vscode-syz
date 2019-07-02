@@ -10,6 +10,10 @@ export function activate(context: vscode.ExtensionContext) {
     context.subscriptions.push(vscode.commands.registerCommand('syz.showReminderView', () => {
         ReminderView.show(context);
     }));
+    
+    context.subscriptions.push(vscode.commands.registerCommand('syz.openPhotoFolder', () => {
+        ReminderView.openFolder(context);
+    }));
 }
 
 export function deactivate() {

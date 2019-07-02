@@ -1,9 +1,36 @@
 'use strict';
 import * as vscode from 'vscode';
 import Asset from './asset';
+import * as child_process from "child_process";
 
 export class ReminderView {
     private static panel: vscode.WebviewPanel | undefined;
+
+    protected static openFile(filePath: string) {
+        if (process.platform === "win32") {
+            if (filePath.match(/^[a-zA-Z]:\\/)) {
+                // C:\ like url.
+                filePath = "file:///" + filePath;
+            }
+
+            if (filePath.startsWith("file:///")) {
+                return child_process.execFile("explorer.exe", [filePath]);
+            } else {
+                return child_process.exec(`start ${filePath}`);
+            }
+        } else if (process.platform === "darwin") {
+            child_process.execFile("open", [filePath]);
+        } else {
+            child_process.execFile("xdg-open", [filePath]);
+        }
+    }
+
+    public static openFolder(context: vscode.ExtensionContext, ) {
+        let asset: Asset = new Asset(context);
+        const path = asset.getDefaultsyzImagePath();
+
+        ReminderView.openFile(path);
+    }
 
     public static show(context: vscode.ExtensionContext, ) {
         let asset: Asset = new Asset(context);

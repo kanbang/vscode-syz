@@ -1,4 +1,7 @@
 
+## 0.0.4 (2019-07-02)
+* 按 `F1`, 然后输入 `syzfolder: 打开照片文件夹，添加自己喜欢的照片` 可以打开图片文件夹替换图片
+
 ## 0.0.3 (2019-06-25)
 * bug fix
 * try to support mp4, but failed,  because VS Code uses a version of electron that does not include ffmpeg. :sob: :sob: :sob:
