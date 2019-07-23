@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<title>YOUR TITLE HERE</title>
+<base target="_blank">
+<!--link rel="icon" type="image/png" href="data:image/png;base64,YOUR-FAVICON-HERE"-->
+<style>body,html{overflow:hidden;font-size:4vw;width:100%;height:100%;margin:0;padding:0}body.loaded{transition:.3s}body.loaded section{transition:opacity .5s}section{position:fixed;top:1vw;bottom:1vw;left:1vw;right:1vw;opacity:0}section:target{z-index:1}body:not(.muted) section:target{opacity:1}img{max-height:100%;max-width:100%}.incremental:not(.revealed){visibility:hidden}</style>
+<style>
+    /* Your custom styles */
+    section {
+        /*background: transparent right bottom / 15vw auto no-repeat url("YOUR-LOGO.png");*/
+    }
+    p {  line-height:1; font-size:18px; margin-top:8px; color:lightgray; font-family: 'Microsoft YaHei','SF Pro Display',Arial,'PingFang SC',sans-serif }
+    .videobox{width:100%;height:100%; }
+    .imgbox{width: 100%;height: 100%;background: no-repeat center center/contain;}
+</style>
+
+<section class="centering-wrapper">
+    <p>多喝热水</p>
+    <video class="videobox" src="../images/syz/v1.mp4" controls="controls" loop="loop" autoplay="true" preload="auto">
+</section>
+
+<section class="centering-wrapper">
+    <p>多喝热水</p>
+    <video class="videobox" src="../images/syz/v2.mp4" controls="controls" loop="loop" autoplay="true" preload="auto">
+</section>
+
+<section class="centering-wrapper">
+    <p>多喝热水</p>
+    <video class="videobox" src="https://github.com/kanbang/links/raw/master/video/Stefanie%20Sun/shenqi.mp4" controls="controls" loop="loop" autoplay="true" preload="auto">
+</section>
+
+<section class="centering-wrapper">
+    <p>多喝热水</p>
+    <div class="imgbox" style="background-image: url(../images/syz/1.jpg)"></div>
+</section>
+
+<script src="./minislides.js"></script>
+<script>location.hash=Math.ceil(Math.random()*slides.length);</script>

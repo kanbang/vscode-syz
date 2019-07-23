@@ -2,7 +2,7 @@
   "name": "syz",
   "displayName": "燕姿鼓励师",
   "description": "写代码不再孤单，有孙燕姿与你同在",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "publisher": "kanbang",
   "icon": "logo.jpg",
   "engines": {
@@ -14,7 +14,8 @@
   "keywords": [
     "孙燕姿",
     "提醒",
-    "鼓励"
+    "鼓励",
+    "鼓励师"
   ],
   "bugs": {
     "url": "https://github.com/kanbang/vscode-syz/issues",
@@ -59,15 +60,25 @@
         },
         "syz.type": {
           "type": "string",
-          "default": "default",
-          "description": "类型：default:默认图；url：网络图"
+          "default": "本地图片",
+          "enum": [
+            "本地图片",
+            "网络链接"],
+          "description": "图片来源"
         },
         "syz.customImages": {
           "type": "array",
           "default": [
             "http://b-ssl.duitang.com/uploads/item/201806/04/20180604090459_gqqjo.jpg"
           ],
-          "description": "用户设置图片地址"
+          "description": "自定义图片地址"
+        },
+        "syz.customVideos": {
+          "type": "array",
+          "default": [
+            "http://b-ssl.duitang.com/uploads/item/201806/04/20180604090459_gqqjo.jpg"
+          ],
+          "description": "自定义视频地址"
         }
       }
     }

@@ -4,8 +4,8 @@ import * as fs from 'fs';
 import { Utility } from './utility';
 
 export default class Asset {
-    public readonly TYPE_URL_IMAGE = 'url';
-    public readonly TYPE_DEFAULT = 'default';
+    public readonly TYPE_URL_IMAGE = '网络链接';
+    public readonly TYPE_DEFAULT = '本地图片';
 
     public constructor(private context: vscode.ExtensionContext) {
     }
@@ -38,7 +38,7 @@ export default class Asset {
                 strSlide += `
                 <section class="centering-wrapper">
                 <p>${title}</p>
-                <video class="v-centered" src="${images[i]}" controls="controls">
+                <video class="videobox" src="${images[i]}" autoplay="autoplay" loop="loop" preload="auto">
                 </section>
                 `;
             }
@@ -47,7 +47,7 @@ export default class Asset {
                 strSlide += `
                 <section class="centering-wrapper">
                 <p>${title}</p>
-                <img class="v-centered" src="${images[i]}">
+                <div class="imgbox" style="background-image: url(${images[i]})"></div>
                 </section>
                 `;
             }
@@ -77,7 +77,6 @@ export default class Asset {
     public getDefaultsyzImagePath() {
         return path.join(this.context.extensionPath, 'images/syz');
     }
-
 
     protected getConfigType(): string {
         return Utility.getConfiguration().get<string>('type', 'default');

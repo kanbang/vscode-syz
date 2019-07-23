@@ -1,4 +1,7 @@
 
+## 0.0.5 (2019-07-04)
+* vscode 1.36 has support ffmpeg, use your favorite video to remind ^_^ 
+
 ## 0.0.4 (2019-07-02)
 * 按 `F1`, 然后输入 `syzfolder: 打开照片文件夹，添加自己喜欢的照片` 可以打开图片文件夹替换图片
 
