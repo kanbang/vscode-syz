@@ -11,8 +11,7 @@ export class ReminderView {
 
     public static openFolder(context: vscode.ExtensionContext, ) {
         let asset: Asset = new Asset(context);
-        const path = asset.getDefaultsyzImagePath();
-
+        const path = asset.getLocalResPath();
         this.openFile(path);
     }
 

@@ -12,20 +12,24 @@
 
 * `syz.reminderViewIntervalInMinutes`: 展示提醒页面的时间间隔（分钟）。(默认值为**60**)
 * `syz.title`: 提示文字。 (默认值为**小哥哥，小哥哥，代码写久了，该休息啦~**)
-* `syz.type`: default (默认图)；url (图片地址)。(默认值为**default**)
-* `syz.customImages`: 配置图片数组（需要搭配syz.type为url） (默认值为**默认图片**)
+* `syz.resLocal`: true (启动本地图片/视频)；false (停用本地图片/视频)。(默认值为**true**)
+* `syz.resWeb`: true (启动网络图片/视频)；false (停用网络图片/视频)。(默认值为**true**)
+* `syz.webResources`: 配置网络资源链接数组
 
 ```
-如下例子，使用自定义图片：
-"syz.type": "网络链接",
-"syz.customImages": [
-    "http://b-ssl.duitang.com/uploads/item/201806/04/20180604090459_gqqjo.jpg"
+如下例子，启用网络图片/视频，支持[jpg/png/mp4]格式：
+"syz.resWeb": true,
+"syz.webResources": [
+    "https://github.com/kanbang/links/raw/master/pic/1.jpg",
+    "https://github.com/kanbang/links/raw/master/pic/2.jpg",
+    "https://github.com/kanbang/links/raw/master/video/Stefanie%20Sun/shenqi.mp4",
+    "https://github.com/kanbang/links/raw/master/video/Stefanie%20Sun/banjuzaijian.mp4"
 ]
 ```
-## 如何使用本地图片作为展示图片
+## 如何更改本地图片/视频
 
-* vscode不允许读取外部文件路径，所以只能自己去替换插件内的图片。替换步骤如下：
+* vscode不允许读取外部文件路径，所以只能自己去替换插件内的媒体。替换步骤如下：
   
-  1. 按 `F1`, 然后输入 `syzfolder: 打开照片文件夹，添加自己喜欢的照片` 来打开图片文件夹
-  
-  2. 替换文件夹内的图片
+  1. 按 `F1`, 然后输入 `syzfolder: 打开媒体文件夹，添加自己喜欢的照片/视频` 来打开媒体文件夹
+
+  2. 替换文件夹内的图片/视频

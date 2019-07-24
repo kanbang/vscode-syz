@@ -1,4 +1,8 @@
 
+## 0.0.6 (2019-07-23)
+* Happy Birthday to Stefanie Sun ^_^ 
+* supports web video/picture resource links
+
 ## 0.0.5 (2019-07-04)
 * vscode 1.36 has support ffmpeg, use your favorite video to remind ^_^ 
 

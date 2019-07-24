@@ -2,7 +2,7 @@
   "name": "syz",
   "displayName": "燕姿鼓励师",
   "description": "写代码不再孤单，有孙燕姿与你同在",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "publisher": "kanbang",
   "icon": "logo.jpg",
   "engines": {
@@ -58,27 +58,26 @@
           "default": "小哥哥，小哥哥，代码写久了，该休息啦~",
           "description": "页面内展示文字"
         },
-        "syz.type": {
-          "type": "string",
-          "default": "本地图片",
-          "enum": [
-            "本地图片",
-            "网络链接"],
-          "description": "图片来源"
+        "syz.resLocal": {
+          "type": "boolean",
+          "default": true,
+          "description": "使用本地媒体资源"
         },
-        "syz.customImages": {
+        "syz.resWeb": {
+          "type": "boolean",
+          "default": true,
+          "description": "使用网络媒体资源"
+        },
+        "syz.webResources": {
           "type": "array",
           "default": [
-            "http://b-ssl.duitang.com/uploads/item/201806/04/20180604090459_gqqjo.jpg"
+            "https://github.com/kanbang/links/raw/master/pic/1.jpg",
+            "https://github.com/kanbang/links/raw/master/pic/2.jpg",
+            "https://github.com/kanbang/links/raw/master/video/Stefanie%20Sun/shenqi.mp4",
+            "https://github.com/kanbang/links/raw/master/video/Stefanie%20Sun/banjuzaijian.mp4",
+            "https://github.com/kanbang/links/raw/master/video/Stefanie%20Sun/shyhda.mp4"
           ],
-          "description": "自定义图片地址"
-        },
-        "syz.customVideos": {
-          "type": "array",
-          "default": [
-            "http://b-ssl.duitang.com/uploads/item/201806/04/20180604090459_gqqjo.jpg"
-          ],
-          "description": "自定义视频地址"
+          "description": "网络资源链接地址，支持[jpg/png/mp4]格式"
         }
       }
     }
@@ -94,6 +93,8 @@
     "typescript": "^2.6.1",
     "vscode": "^1.1.21",
     "tslint": "^5.8.0",
+    "axios": "^0.19.0",
+    "md5-typescript": "^1.0.5",
     "@types/node": "^8.10.25",
     "@types/mocha": "^2.2.42"
   },
