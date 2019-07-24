@@ -153,6 +153,9 @@ export default class Asset {
                           });
                     });
                 }
+                else {
+                    console.log('文件已下载');
+                }
             });
         });
     }
