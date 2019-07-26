@@ -1,4 +1,10 @@
 
+## 0.0.10 (2019-07-26)
+* fix bugs
+
+## 0.0.9 (2019-07-24)
+* not work in publish，so sad...
+
 ## 0.0.6 (2019-07-23)
 * Happy Birthday to Stefanie Sun ^_^ 
 * supports web video/picture resource links

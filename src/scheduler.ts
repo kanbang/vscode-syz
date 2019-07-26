@@ -1,4 +1,5 @@
 'use strict';
+
 import * as vscode from "vscode";
 import { ReminderView } from './reminderView';
 import { Utility } from './utility';

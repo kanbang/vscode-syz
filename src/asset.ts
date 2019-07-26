@@ -2,7 +2,10 @@ import * as vscode from 'vscode';
 import { Utility } from './utility';
 import * as path from 'path';
 import * as fs from 'fs';
-import axios from 'axios';
+
+//import axios from 'axios';
+import * as WebRequest from "web-request";
+
 import {Md5} from "md5-typescript";
 
 
@@ -107,7 +110,7 @@ export default class Asset {
     }
 
     ////////////////////////////////////////////////////////////////////////////
-    
+    /*
     protected async downloadFile(url: string, filepath: string, name: string) {
         if (!fs.existsSync(filepath)) {
             fs.mkdirSync(filepath);
@@ -128,6 +131,18 @@ export default class Asset {
             writer.on("error", reject);
         });
     }
+    */
+
+    protected async downloadFile(url: string, filepath: string, name: string) {
+        let request = WebRequest.stream(url);
+
+        const mypath = path.resolve(filepath, name);
+        let writePath = fs.createWriteStream(mypath);
+
+        request.pipe(writePath);
+        await request.response;
+        await new Promise(resolve => writePath.on('finish', () => resolve()));
+    };
 
     public syncFiles(){
         let urls = this.getWebResources();
@@ -159,4 +174,5 @@ export default class Asset {
             });
         });
     }
+    
 }

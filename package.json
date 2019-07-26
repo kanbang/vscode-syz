@@ -2,11 +2,11 @@
   "name": "syz",
   "displayName": "燕姿鼓励师",
   "description": "写代码不再孤单，有孙燕姿与你同在",
-  "version": "0.0.7",
+  "version": "0.0.10",
   "publisher": "kanbang",
   "icon": "logo.jpg",
   "engines": {
-    "vscode": "^1.30.0"
+    "vscode": "^1.36.0"
   },
   "categories": [
     "Other"
@@ -30,7 +30,7 @@
     "onCommand:syz.showReminderView",
     "*"
   ],
-  "main": "./out/extension",
+  "main": "./out/extension.js",
   "contributes": {
     "commands": [
       {
@@ -86,17 +86,22 @@
     "vscode:prepublish": "npm run compile",
     "compile": "tsc -p ./",
     "watch": "tsc -watch -p ./",
-    "postinstall": "node ./node_modules/vscode/bin/install",
-    "test": "npm run compile && node ./node_modules/vscode/bin/test"
+    "test": "node ./out/test/runTest.js"
   },
   "devDependencies": {
-    "typescript": "^2.6.1",
-    "vscode": "^1.1.21",
-    "tslint": "^5.8.0",
-    "axios": "^0.19.0",
+    "@types/glob": "^7.1.1",
+    "@types/mocha": "^5.2.6",
+    "@types/node": "^10.12.21",
+    "@types/vscode": "^1.36.0",
+    "glob": "^7.1.4",
+    "mocha": "^6.1.4",
+    "typescript": "^3.3.1",
+    "tslint": "^5.12.1",
+    "vscode-test": "^1.0.0-next.0"
+  },
+  "dependencies": {
     "md5-typescript": "^1.0.5",
-    "@types/node": "^8.10.25",
-    "@types/mocha": "^2.2.42"
+    "web-request": "^1.0.7"
   },
   "__npminstall_done": false
 }

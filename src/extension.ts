@@ -1,7 +1,9 @@
 'use strict';
+
 import * as vscode from 'vscode';
 import { ReminderView } from './reminderView';
 import { Scheduler } from './scheduler';
+
 import Asset from './asset';
 
 
@@ -17,8 +19,19 @@ export function activate(context: vscode.ExtensionContext) {
     const scheduler = new Scheduler(context);
     scheduler.start();
 
-    let asset: Asset = new Asset(context);
-    asset.syncFiles();
+
+        try {
+            let asset: Asset = new Asset(context);
+            vscode.window.showInformationMessage("sync start...");
+            asset.syncFiles();
+        } catch (error) {
+            vscode.window.showErrorMessage("sync error...");
+        }
+    
+        vscode.window.showInformationMessage("go on...");    
+ 
+
+
 }
 
 export function deactivate() {
