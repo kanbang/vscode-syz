@@ -1,4 +1,7 @@
 
+## 0.1.0 (2019-07-30)
+* optimize synchronization logic
+
 ## 0.0.10 (2019-07-26)
 * fix bugs
 

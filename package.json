@@ -2,7 +2,7 @@
   "name": "syz",
   "displayName": "燕姿鼓励师",
   "description": "写代码不再孤单，有孙燕姿与你同在",
-  "version": "0.0.10",
+  "version": "0.1.0",
   "publisher": "kanbang",
   "icon": "logo.jpg",
   "engines": {
@@ -101,7 +101,7 @@
   },
   "dependencies": {
     "md5-typescript": "^1.0.5",
-    "web-request": "^1.0.7"
+    "axios": "^0.19.0"
   },
   "__npminstall_done": false
 }

@@ -3,8 +3,8 @@ import { Utility } from './utility';
 import * as path from 'path';
 import * as fs from 'fs';
 
-//import axios from 'axios';
-import * as WebRequest from "web-request";
+import axios from 'axios';
+// import * as WebRequest from "web-request";
 
 import {Md5} from "md5-typescript";
 
@@ -93,6 +93,10 @@ export default class Asset {
         return path.join(this.context.extensionPath, 'images/web');
     }
 
+    public getWebTmpPath() {
+        return path.join(this.context.extensionPath, 'images/tmp');
+    }
+
     protected enableLocalRes(): boolean {
         return Utility.getConfiguration().get<boolean>('resLocal', true);
     }
@@ -110,7 +114,7 @@ export default class Asset {
     }
 
     ////////////////////////////////////////////////////////////////////////////
-    /*
+ 
     protected async downloadFile(url: string, filepath: string, name: string) {
         if (!fs.existsSync(filepath)) {
             fs.mkdirSync(filepath);
@@ -131,8 +135,8 @@ export default class Asset {
             writer.on("error", reject);
         });
     }
-    */
 
+    /*
     protected async downloadFile(url: string, filepath: string, name: string) {
         let request = WebRequest.stream(url);
 
@@ -143,35 +147,66 @@ export default class Asset {
         await request.response;
         await new Promise(resolve => writePath.on('finish', () => resolve()));
     };
+    */
 
     public syncFiles(){
         let urls = this.getWebResources();
         let asset = this;
-        urls.forEach(function (url, index) {
+
+        let folderPath = this.getWebResPath();
+        if (!fs.existsSync(folderPath)) {
+            fs.mkdirSync(folderPath);
+        }
+
+        let webFiles: vscode.Uri[] = [];
+        const dirPath = this.getWebResPath();
+        webFiles = this.readPathFiles(dirPath);
+
+        let urlFiles: string[] = [];
+
+        urls.forEach( (url, index)=> {
             let dotIndex = url.toString().lastIndexOf('.');
             let strExt = url.substr(dotIndex);
             let strMd5 = Md5.init(url);
-            let folderPath = path.join(asset.context.extensionPath, 'images/web');
             let filePath = path.join(folderPath, strMd5+strExt);
-            
+
+            urlFiles.push(filePath);
+
+            let folderPathTmp = asset.getWebTmpPath();
+            let filePathTmp = path.join(folderPathTmp, strMd5+strExt);
+
             fs.access(filePath, fs.constants.F_OK, (err) => {
                 if(err){
-                    asset.downloadFile(url, folderPath, strMd5+strExt )
+                    fs.unlink(filePathTmp, (err) => { console.log(err); });
+
+                    asset.downloadFile(url, folderPathTmp, strMd5+strExt )
                     .then(()=>{
-                        console.log('文件下载成功');
-                    })
-                    .catch(()=>{
-                        fs.unlink(filePath, (err) => {
-                            if (!err) {
-                                console.log('文件已删除');
+                        //拷贝
+                        fs.rename(filePathTmp, filePath, (err)=>{ 
+                            if(err){
+                                console.log(err); 
                             }
-                          });
+                            else{
+                                console.log('文件['+strMd5+strExt+']同步完成');
+                            }
+                        });
+
+                        // fs.unlink(filePathTmp, (err) => { console.log(err); });
                     });
                 }
                 else {
-                    console.log('文件已下载');
+                    console.log('文件['+strMd5+strExt+']已存在');
                 }
             });
+        });
+
+        webFiles.forEach((item)=>{
+            if( urlFiles.findIndex((urlItem)=>{
+                return item.fsPath == urlItem;
+            }) < 0 ) {
+                console.log('删除文件['+item.fsPath+']');
+                fs.unlink(item.fsPath, (err) => { console.log(err); });
+            }
         });
     }
     
