@@ -4,9 +4,9 @@ import Asset from './asset';
 import * as child_process from "child_process";
 
 
-
 export class ReminderView {
-    private static panel: vscode.WebviewPanel | undefined;
+    private static panelSyz: vscode.WebviewPanel | undefined;
+    private static panelKedou: vscode.WebviewPanel | undefined;
 
 
     public static openFolder(context: vscode.ExtensionContext, ) {
@@ -19,21 +19,37 @@ export class ReminderView {
         let asset: Asset = new Asset(context);
 
         const strSlideSection = asset.getSlideSection();
+
         const title = asset.getTitle();
 
-        if (this.panel) {
-            this.panel.webview.html = this.generateHtml(strSlideSection, title);
-            this.panel.reveal();
+        if (this.panelKedou) {
+            this.panelKedou.webview.html = asset.getWebViewContent(context, 'kedou/index.html');
+            this.panelKedou.reveal();
         } else {
-            this.panel = vscode.window.createWebviewPanel("syz", "孙燕姿", vscode.ViewColumn.Two, {
+            this.panelKedou = vscode.window.createWebviewPanel("syz", "花好约猿", vscode.ViewColumn.Two, {
                 enableScripts: true,
                 retainContextWhenHidden: true,
             });
             
+            this.panelKedou.webview.html = asset.getWebViewContent(context, 'kedou/index.html');
+            this.panelKedou.onDidDispose(() => {
+                this.panelKedou = undefined;
+            });
+        }
+        
+        if (this.panelSyz) {
+            this.panelSyz.webview.html = this.generateHtml(title, strSlideSection);
+            
+            this.panelSyz.reveal();
+        } else {
+            this.panelSyz = vscode.window.createWebviewPanel("syz", "孙燕姿", vscode.ViewColumn.Two, {
+                enableScripts: true,
+                retainContextWhenHidden: true,
+            });
 
-            this.panel.webview.html = this.generateHtml(strSlideSection, title);
-            this.panel.onDidDispose(() => {
-                this.panel = undefined;
+            this.panelSyz.webview.html = this.generateHtml(title, strSlideSection);
+            this.panelSyz.onDidDispose(() => {
+                this.panelSyz = undefined;
             });
         }
     }
@@ -41,7 +57,8 @@ export class ReminderView {
     ///////////////////////////////////////////////////////////////////////////////////////////////////
     //protected method
 
-    protected static generateHtml(strSlideSection: vscode.Uri|string, title: string): string {
+    protected static generateHtml(title: string, strSlideSection: vscode.Uri|string): string {
+        
         let html = `<!doctype html>
         <html lang="en">
         <meta charset="utf-8">
@@ -60,7 +77,7 @@ export class ReminderView {
         </style>
         
         ${strSlideSection}
-        
+
         <script>var slides,currentPageNumber,activeSlide,incremental,keyCodeNormalized,setPage,processHash,document_body,revealedCls="revealed",incrementalSelector=".incremental",querySelector="querySelector",loc=location,doc=document;document_body=doc.body,slides=Array.from(doc[querySelector+"All"]("section")),setPage=function(e){if(currentPageNumber){var d=document.getElementById(currentPageNumber).querySelector(".videobox");d&&d.pause()}e>slides.length&&(e=1),e<=0&&(e=slides.length),currentPageNumber=Math.min(slides.length,e||1),activeSlide=slides[currentPageNumber-1],slides.map.call(activeSlide[querySelector+"All"](incrementalSelector),function(e){e.classList.remove(revealedCls)}),loc.hash=currentPageNumber,document_body.style.background=activeSlide.dataset.bg||"",document_body.dataset.slideId=activeSlide.dataset.id||currentPageNumber;var t=document.getElementById(document_body.dataset.slideId).querySelector(".videobox");t&&t.play()},addEventListener("keydown",function(e,d){keyCodeNormalized=e.which-32,keyCodeNormalized&&keyCodeNormalized-2&&keyCodeNormalized-7&&keyCodeNormalized-8||(incremental=activeSlide[querySelector](incrementalSelector+":not(."+revealedCls+")"),incremental?incremental.classList.add(revealedCls):setPage(currentPageNumber+1),d=1),keyCodeNormalized-1&&keyCodeNormalized-5&&keyCodeNormalized-6||(setPage(currentPageNumber-1),d=1),keyCodeNormalized+5||(document_body.classList.toggle("muted"),d=1),keyCodeNormalized-4||(setPage(1),d=1),keyCodeNormalized-3||(setPage(1/0),d=1),d&&e.preventDefault()}),slides.map(function(e,d){e.id=d+1}),setInterval(processHash=function(e){e=loc.hash.substr(1),e!=currentPageNumber&&setPage(e)},99),processHash(),document_body.classList.add("loaded");</script>
         <script>location.hash=Math.ceil(Math.random()*slides.length)</script>
         

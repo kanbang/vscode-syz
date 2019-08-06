@@ -2,7 +2,7 @@
   "name": "syz",
   "displayName": "燕姿鼓励师",
   "description": "写代码不再孤单，有孙燕姿与你同在",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "publisher": "kanbang",
   "icon": "logo.jpg",
   "engines": {
@@ -55,8 +55,13 @@
         },
         "syz.title": {
           "type": "string",
-          "default": "小哥哥，小哥哥，代码写久了，该休息啦~",
+          "default": "小哥哥，小哥哥，代码写久了，喝杯水吧~",
           "description": "页面内展示文字"
+        },
+        "syz.chat": {
+          "type": "boolean",
+          "default": true,
+          "description": "启用蝌蚪聊聊"
         },
         "syz.resLocal": {
           "type": "boolean",

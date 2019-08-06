@@ -1,4 +1,7 @@
 
+## 0.1.1 (2019-08-6)
+* add tadpole chat room for beta
+
 ## 0.1.0 (2019-07-30)
 * optimize synchronization logic
 

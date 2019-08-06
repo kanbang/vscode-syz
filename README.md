@@ -11,9 +11,10 @@
 ## 配置
 
 * `syz.reminderViewIntervalInMinutes`: 展示提醒页面的时间间隔（分钟）。(默认值为**60**)
-* `syz.title`: 提示文字。 (默认值为**小哥哥，小哥哥，代码写久了，该休息啦~**)
-* `syz.resLocal`: true (启动本地图片/视频)；false (停用本地图片/视频)。(默认值为**true**)
-* `syz.resWeb`: true (启动网络图片/视频)；false (停用网络图片/视频)。(默认值为**true**)
+* `syz.title`: 提示文字。 (默认值为**小哥哥，小哥哥，代码写久了，喝杯水吧~**)
+* `syz.chat`: true (启用蝌蚪聊聊)；false (停用蝌蚪聊聊)。(默认值为**true**)
+* `syz.resLocal`: true (启用本地图片/视频)；false (停用本地图片/视频)。(默认值为**true**)
+* `syz.resWeb`: true (启用网络图片/视频)；false (停用网络图片/视频)。(默认值为**true**)
 * `syz.webResources`: 配置网络资源链接数组
 
 ```

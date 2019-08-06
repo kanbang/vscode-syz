@@ -22,16 +22,11 @@ export function activate(context: vscode.ExtensionContext) {
 
         try {
             let asset: Asset = new Asset(context);
-            vscode.window.showInformationMessage("sync start...");
+            // vscode.window.showInformationMessage("sync start...");
             asset.syncFiles();
         } catch (error) {
-            vscode.window.showErrorMessage("sync error...");
+            // vscode.window.showErrorMessage("sync error...");
         }
-    
-        vscode.window.showInformationMessage("go on...");    
- 
-
-
 }
 
 export function deactivate() {
