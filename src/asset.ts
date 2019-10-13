@@ -6,7 +6,7 @@ import * as fs from 'fs';
 import axios from 'axios';
 // import * as WebRequest from "web-request";
 
-import {Md5} from "md5-typescript";
+import { Md5 } from "md5-typescript";
 
 
 export default class Asset {
@@ -21,11 +21,9 @@ export default class Asset {
         const title = this.getTitle();
         let strSlide = "";
 
-        for(var i=0; i<images.length; ++i)
-        {
+        for (var i = 0; i < images.length; ++i) {
             let str = images[i].toString().toLowerCase();
-            if(str.substring(str.length-4) === ".mp4" )
-            {
+            if (str.substring(str.length - 4) === ".mp4") {
                 strSlide += `
                 <section class="centering-wrapper">
                 <p>${title}</p>
@@ -33,8 +31,7 @@ export default class Asset {
                 </section>
                 `;
             }
-            else
-            {
+            else {
                 strSlide += `
                 <section class="centering-wrapper">
                 <p>${title}</p>
@@ -43,27 +40,27 @@ export default class Asset {
                 `;
             }
         }
- 
+
         return strSlide;
     }
 
     protected getResFiles(): vscode.Uri[] {
         let enableLocal = this.enableLocalRes();
         let enableWeb = this.enableWebRes();
-        if(!enableLocal && !enableWeb){
+        if (!enableLocal && !enableWeb) {
             enableLocal = true;
             enableWeb = true;
         }
 
         let files: vscode.Uri[] = [];
-        if(enableLocal){
+        if (enableLocal) {
             let tmpFiles: vscode.Uri[] = [];
             const dirPath = this.getLocalResPath();
             tmpFiles = this.readPathFiles(dirPath);
             files = files.concat(tmpFiles);
         }
 
-        if(enableWeb){
+        if (enableWeb) {
             let tmpFiles: vscode.Uri[] = [];
             const dirPath = this.getWebResPath();
             tmpFiles = this.readPathFiles(dirPath);
@@ -118,8 +115,19 @@ export default class Asset {
         return Utility.getConfiguration().get<string>('title', '');
     }
 
+    public getGender(): number {
+        switch (Utility.getConfiguration().get<string>('gender', '')) {
+            case "男":
+                return 1;
+            case "女":
+                return 1;
+            default:
+                return 0;
+        }
+    }
 
-    
+
+
     ////////////////////////////////////////////////////////////////////////////
     /**
      * 从某个HTML文件读取能被Webview加载的HTML内容
@@ -142,19 +150,19 @@ export default class Asset {
         let indexPath0 = path.join(folderPath, 'index0.html');
 
         fs.access(indexPath0, fs.constants.F_OK, (err) => {
-            if(err){
+            if (err) {
                 let html = this.getWebViewContent(context, 'kedou/index.html');
-                var fd = fs.openSync(indexPath0,'w');
+                var fd = fs.openSync(indexPath0, 'w');
                 fs.writeSync(fd, html);
                 fs.closeSync(fd);
             }
         });
-       
-       return vscode.Uri.file(indexPath0).with({ scheme: 'vscode-resource' }).toString();
+
+        return vscode.Uri.file(indexPath0).with({ scheme: 'vscode-resource' }).toString();
     }
 
     ////////////////////////////////////////////////////////////////////////////
- 
+
     protected async downloadFile(url: string, filepath: string, name: string) {
         if (!fs.existsSync(filepath)) {
             fs.mkdirSync(filepath);
@@ -189,7 +197,7 @@ export default class Asset {
     };
     */
 
-    public syncFiles(){
+    public syncFiles() {
         let urls = this.getWebResources();
         let asset = this;
 
@@ -204,50 +212,50 @@ export default class Asset {
 
         let urlFiles: string[] = [];
 
-        urls.forEach( (url, index)=> {
+        urls.forEach((url, index) => {
             let dotIndex = url.toString().lastIndexOf('.');
             let strExt = url.substr(dotIndex);
             let strMd5 = Md5.init(url);
-            let filePath = path.join(folderPath, strMd5+strExt);
+            let filePath = path.join(folderPath, strMd5 + strExt);
 
             urlFiles.push(filePath);
 
             let folderPathTmp = asset.getWebTmpPath();
-            let filePathTmp = path.join(folderPathTmp, strMd5+strExt);
+            let filePathTmp = path.join(folderPathTmp, strMd5 + strExt);
 
             fs.access(filePath, fs.constants.F_OK, (err) => {
-                if(err){
+                if (err) {
                     fs.unlink(filePathTmp, (err) => { console.log(err); });
 
-                    asset.downloadFile(url, folderPathTmp, strMd5+strExt )
-                    .then(()=>{
-                        //拷贝
-                        fs.rename(filePathTmp, filePath, (err)=>{ 
-                            if(err){
-                                console.log(err); 
-                            }
-                            else{
-                                console.log('文件['+strMd5+strExt+']同步完成');
-                            }
-                        });
+                    asset.downloadFile(url, folderPathTmp, strMd5 + strExt)
+                        .then(() => {
+                            //拷贝
+                            fs.rename(filePathTmp, filePath, (err) => {
+                                if (err) {
+                                    console.log(err);
+                                }
+                                else {
+                                    console.log('文件[' + strMd5 + strExt + ']同步完成');
+                                }
+                            });
 
-                        // fs.unlink(filePathTmp, (err) => { console.log(err); });
-                    });
+                            // fs.unlink(filePathTmp, (err) => { console.log(err); });
+                        });
                 }
                 else {
-                    console.log('文件['+strMd5+strExt+']已存在');
+                    console.log('文件[' + strMd5 + strExt + ']已存在');
                 }
             });
         });
 
-        webFiles.forEach((item)=>{
-            if( urlFiles.findIndex((urlItem)=>{
+        webFiles.forEach((item) => {
+            if (urlFiles.findIndex((urlItem) => {
                 return item.fsPath === urlItem;
-            }) < 0 ) {
-                console.log('删除文件['+item.fsPath+']');
+            }) < 0) {
+                console.log('删除文件[' + item.fsPath + ']');
                 fs.unlink(item.fsPath, (err) => { console.log(err); });
             }
         });
     }
-    
+
 }

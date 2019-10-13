@@ -30,16 +30,20 @@ export class ReminderView {
                 enableScripts: true,
                 retainContextWhenHidden: true,
             });
-            
+
             this.panelKedou.webview.html = asset.getWebViewContent(context, 'kedou/index.html');
             this.panelKedou.onDidDispose(() => {
                 this.panelKedou = undefined;
             });
+
+            // Send a message to our webview.
+            // You can send any JSON serializable data.
+            this.panelKedou.webview.postMessage({ command: 'gender'+asset.getGender() });
         }
-        
+
         if (this.panelSyz) {
             this.panelSyz.webview.html = this.generateHtml(title, strSlideSection);
-            
+
             this.panelSyz.reveal();
         } else {
             this.panelSyz = vscode.window.createWebviewPanel("syz", "孙燕姿", vscode.ViewColumn.Two, {
@@ -57,8 +61,8 @@ export class ReminderView {
     ///////////////////////////////////////////////////////////////////////////////////////////////////
     //protected method
 
-    protected static generateHtml(title: string, strSlideSection: vscode.Uri|string): string {
-        
+    protected static generateHtml(title: string, strSlideSection: vscode.Uri | string): string {
+
         let html = `<!doctype html>
         <html lang="en">
         <meta charset="utf-8">
@@ -86,7 +90,7 @@ export class ReminderView {
         return html;
     }
 
-    
+
     protected static openFile(filePath: string) {
         if (process.platform === "win32") {
             if (filePath.match(/^[a-zA-Z]:\\/)) {
