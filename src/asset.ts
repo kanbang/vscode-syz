@@ -120,7 +120,7 @@ export default class Asset {
             case "男":
                 return 1;
             case "女":
-                return 1;
+                return 2;
             default:
                 return 0;
         }
