@@ -1,133 +1,151 @@
-var WebSocketService = function(model, webSocket) {
+var WebSocketService = function (scene, webSocket) {
 	var webSocketService = this;
-	
+
 	var webSocket = webSocket;
-	var model = model;
-	
+	var scene = scene;
+
 	this.hasConnection = false;
-	
-	this.welcomeHandler = function(data) {
+
+	this.welcomeHandler = function (data) {
 		webSocketService.hasConnection = true;
-		
-		model.userTadpole.id = data.id;
-		model.tadpoles[data.id] = model.tadpoles[-1];
-		delete model.tadpoles[-1];
-		
+
+		scene.initUserID(data.id);
+
+		webSocketService.sendConfig();
+
 		$('#chat').initChat();
-		if($.cookie('todpole_name'))	{
-			webSocketService.sendMessage('name:'+$.cookie('todpole_name'));
+		if ($.cookie('todpole_name')) {
+			webSocketService.sendMessage('name:' + $.cookie('todpole_name'));
 		}
 	};
-	
-	this.updateHandler = function(data) {
+
+	this.updateHandler = function (data) {
 		var newtp = false;
-		
-		if(!model.tadpoles[data.id]) {
+
+		if (!scene.tadpoles[data.id]) {
 			newtp = true;
-			model.tadpoles[data.id] = new Tadpole();
-			model.arrows[data.id] = new Arrow(model.tadpoles[data.id], model.camera);
+			scene.tadpoles[data.id] = new Tadpole();
 		}
-		
-		var tadpole = model.tadpoles[data.id];
-		
-		if(tadpole.id == model.userTadpole.id) {			
+
+		var tadpole = scene.tadpoles[data.id];
+		if (data.name) {
 			tadpole.name = data.name;
+		}
+
+		if (data.gender) {
+			tadpole.gender = data.gender;
+		}
+
+		if (tadpole.id == scene.userTadpole.id) {
 			return;
-		} else {
-			tadpole.name = data.name;
 		}
-		
-		if(newtp) {
+
+		if (newtp) {
 			tadpole.x = data.x;
 			tadpole.y = data.y;
 		} else {
 			tadpole.targetX = data.x;
 			tadpole.targetY = data.y;
 		}
-		
+
 		tadpole.angle = data.angle;
 		tadpole.momentum = data.momentum;
-		
+
 		tadpole.timeSinceLastServerUpdate = 0;
 	}
-	
-	this.messageHandler = function(data) {
-		var tadpole = model.tadpoles[data.id];
-		if(!tadpole) {
+
+	this.messageHandler = function (data) {
+		var tadpole = scene.tadpoles[data.id];
+		if (!tadpole) {
 			return;
 		}
 		tadpole.timeSinceLastServerUpdate = 0;
 		tadpole.messages.push(new Message(data.message));
 	}
-	
-	this.closedHandler = function(data) {
-		if(model.tadpoles[data.id]) {
-			delete model.tadpoles[data.id];
-			delete model.arrows[data.id];
+
+	this.closedHandler = function (data) {
+		if (scene.tadpoles[data.id]) {
+			delete scene.tadpoles[data.id];
+			delete scene.arrows[data.id];
 		}
 	}
-	
-	this.redirectHandler = function(data) {
+
+	this.redirectHandler = function (data) {
 		if (data.url) {
 			if (authWindow) {
 				authWindow.document.location = data.url;
 			} else {
 				document.location = data.url;
-			}			
+			}
 		}
 	}
-	
-	this.processMessage = function(data) {
+
+	this.processMessage = function (data) {
 		var fn = webSocketService[data.type + 'Handler'];
 		if (fn) {
 			fn(data);
 		}
 	}
-	
-	this.connectionClosed = function() {
+
+	this.connectionClosed = function () {
 		webSocketService.hasConnection = false;
 		$('#cant-connect').fadeIn(300);
 	};
-	
-	this.sendUpdate = function(tadpole) {
+
+	this.sendUpdate = function (tadpole) {
 		var sendObj = {
 			type: 'update',
 			x: tadpole.x.toFixed(1),
 			y: tadpole.y.toFixed(1),
 			angle: tadpole.angle.toFixed(3),
-			momentum: tadpole.momentum.toFixed(3)
+			momentum: tadpole.momentum.toFixed(3),
+			name: tadpole.name,
+			gender: tadpole.gender
 		};
-		
-		if(tadpole.name) {
-			sendObj['name'] = tadpole.name;
-		}
-		
+
 		webSocket.send(JSON.stringify(sendObj));
 	}
-	
-	this.sendMessage = function(msg) {
+
+	// send config
+	this.sendConfig = function () {
+
+		var sendObj = {
+			type: 'config',
+			id: scene.userTadpole.id,
+			name: scene.userTadpole.name,
+			gender: scene.userTadpole.gender
+		};
+
+		webSocket.send(JSON.stringify(sendObj));
+	}
+
+	this.sendMessage = function (msg) {
 		var regexp = /name: ?(.+)/i;
-		if(regexp.test(msg)) {
-			model.userTadpole.name = msg.match(regexp)[1];
-			$.cookie('todpole_name', model.userTadpole.name, {expires:14});
+		if (regexp.test(msg)) {
+			scene.userTadpole.name = msg.match(regexp)[1];
+			$.cookie('todpole_name', scene.userTadpole.name, {
+				expires: 14
+			});
+
+			webSocketService.sendConfig();
 			return;
 		}
-		
+
 		var sendObj = {
 			type: 'message',
 			message: msg
 		};
-		
+
 		webSocket.send(JSON.stringify(sendObj));
 	}
-	
-	this.authorize = function(token,verifier) {
+
+	this.authorize = function (token, verifier) {
 		var sendObj = {
 			type: 'authorize',
 			token: token,
 			verifier: verifier
 		};
-		
+
 		webSocket.send(JSON.stringify(sendObj));
 	}
 }

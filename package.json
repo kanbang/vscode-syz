@@ -63,6 +63,18 @@
           "default": true,
           "description": "启用蝌蚪聊聊"
         },
+        "syz.gender": {
+          "type": "string",
+          "default": "保密",
+          "enum": ["男", "女", "保密"],
+          "enumDescriptions": [
+            "蓝色蝌蚪",
+            "粉色蝌蚪",
+            "灰色蝌蚪"
+          ]
+        },
+     
+
         "syz.resLocal": {
           "type": "boolean",
           "default": true,

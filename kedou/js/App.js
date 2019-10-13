@@ -3,7 +3,7 @@
 var App = function(aSettings, aCanvas) {
 	var app = this;
 	
-	var 	model,
+	var 	scene,
 			canvas,
 			context,
 			webSocket,
@@ -14,69 +14,32 @@ var App = function(aSettings, aCanvas) {
 	;
 	
 	app.update = function() {
-	  if (messageQuota < 5 && model.userTadpole.age % 50 == 0) { messageQuota++; }
+	  if (messageQuota < 5 && scene.userTadpole.age % 50 == 0) { messageQuota++; }
 	  
 		// Update usertadpole
 		if(keyNav.x != 0 || keyNav.y != 0) {
-			model.userTadpole.userUpdate(model.tadpoles, model.userTadpole.x + keyNav.x,model.userTadpole.y + keyNav.y);
+			scene.userTadpole.userUpdate(scene.tadpoles, scene.userTadpole.x + keyNav.x,scene.userTadpole.y + keyNav.y);
 		}
 		else {
 			var mvp = getMouseWorldPosition();
 			mouse.worldx = mvp.x;
 			mouse.worldy = mvp.y;
-			model.userTadpole.userUpdate(model.tadpoles, mouse.worldx, mouse.worldy);
+			scene.userTadpole.userUpdate(scene.tadpoles, mouse.worldx, mouse.worldy);
 		}
 		
-		if(model.userTadpole.age % 6 == 0 && model.userTadpole.changed > 1 && webSocketService.hasConnection) {
-			model.userTadpole.changed = 0;
-			webSocketService.sendUpdate(model.userTadpole);
+		if(scene.userTadpole.age % 6 == 0 && scene.userTadpole.changed > 1 && webSocketService.hasConnection) {
+			scene.userTadpole.changed = 0;
+			webSocketService.sendUpdate(scene.userTadpole);
 		}
 		
-		model.camera.update(model);
-		
-		// Update tadpoles
-		for(id in model.tadpoles) {
-			model.tadpoles[id].update(mouse);
-		}
-		
-		// Update waterParticles
-		for(i in model.waterParticles) {
-			model.waterParticles[i].update(model.camera.getOuterBounds(), model.camera.zoom);
-		}
-		
-		// Update arrows
-		for(i in model.arrows) {
-			var cameraBounds = model.camera.getBounds();
-			var arrow = model.arrows[i];
-			arrow.update();
-		}
+	    scene.update(mouse);
 	};
 	
 	
 	
 	app.draw = function() {
-		model.camera.setupContext();
-		
-		// Draw waterParticles
-		for(i in model.waterParticles) {
-			model.waterParticles[i].draw(context);
-		}
-		
-		// Draw tadpoles
-		for(id in model.tadpoles) {
-			model.tadpoles[id].draw(context);
-		}
-		
-		// Start UI layer (reset transform matrix)
-		model.camera.startUILayer();
-		
-		// Draw arrows
-		for(i in model.arrows) {
-			model.arrows[i].draw(context, canvas);
-		}
+		scene.draw();
 	};
-		
-	
 	
 	app.onSocketOpen = function(e) {
 		//console.log('Socket opened!', e);
@@ -120,16 +83,16 @@ var App = function(aSettings, aCanvas) {
 		if(mouse.tadpole && mouse.tadpole.hover && mouse.tadpole.onclick(e)) {
             return;
 		}
-		if(model.userTadpole && e.which == 1) {
-			model.userTadpole.momentum = model.userTadpole.targetMomentum = model.userTadpole.maxMomentum;
+		if(scene.userTadpole && e.which == 1) {
+			scene.userTadpole.momentum = scene.userTadpole.targetMomentum = scene.userTadpole.maxMomentum;
 		}
 
 
 	};
 	
 	app.mouseup = function(e) {
-		if(model.userTadpole && e.which == 1) {
-			model.userTadpole.targetMomentum = 0;
+		if(scene.userTadpole && e.which == 1) {
+			scene.userTadpole.targetMomentum = 0;
 		}
 	};
 	
@@ -141,22 +104,22 @@ var App = function(aSettings, aCanvas) {
 	app.keydown = function(e) {
 		if(e.keyCode == keys.up) {
 			keyNav.y = -1;
-			model.userTadpole.momentum = model.userTadpole.targetMomentum = model.userTadpole.maxMomentum;
+			scene.userTadpole.momentum = scene.userTadpole.targetMomentum = scene.userTadpole.maxMomentum;
 			e.preventDefault();
 		}
 		else if(e.keyCode == keys.down) {
 			keyNav.y = 1;
-			model.userTadpole.momentum = model.userTadpole.targetMomentum = model.userTadpole.maxMomentum;
+			scene.userTadpole.momentum = scene.userTadpole.targetMomentum = scene.userTadpole.maxMomentum;
 			e.preventDefault();
 		}
 		else if(e.keyCode == keys.left) {
 			keyNav.x = -1;
-			model.userTadpole.momentum = model.userTadpole.targetMomentum = model.userTadpole.maxMomentum;
+			scene.userTadpole.momentum = scene.userTadpole.targetMomentum = scene.userTadpole.maxMomentum;
 			e.preventDefault();
 		}
 		else if(e.keyCode == keys.right) {
 			keyNav.x = 1;
-			model.userTadpole.momentum = model.userTadpole.targetMomentum = model.userTadpole.maxMomentum;
+			scene.userTadpole.momentum = scene.userTadpole.targetMomentum = scene.userTadpole.maxMomentum;
 			e.preventDefault();
 		}
 	};
@@ -164,14 +127,14 @@ var App = function(aSettings, aCanvas) {
 		if(e.keyCode == keys.up || e.keyCode == keys.down) {
 			keyNav.y = 0;
 			if(keyNav.x == 0 && keyNav.y == 0) {
-				model.userTadpole.targetMomentum = 0;
+				scene.userTadpole.targetMomentum = 0;
 			}
 			e.preventDefault();
 		}
 		else if(e.keyCode == keys.left || e.keyCode == keys.right) {
 			keyNav.x = 0;
 			if(keyNav.x == 0 && keyNav.y == 0) {
-				model.userTadpole.targetMomentum = 0;
+				scene.userTadpole.targetMomentum = 0;
 			}
 			e.preventDefault();
 		}
@@ -181,8 +144,8 @@ var App = function(aSettings, aCanvas) {
 	  e.preventDefault();
 	  mouse.clicking = true;		
 		
-		if(model.userTadpole) {
-			model.userTadpole.momentum = model.userTadpole.targetMomentum = model.userTadpole.maxMomentum;
+		if(scene.userTadpole) {
+			scene.userTadpole.momentum = scene.userTadpole.targetMomentum = scene.userTadpole.maxMomentum;
 		}
 		
 		var touch = e.changedTouches.item(0);
@@ -192,8 +155,8 @@ var App = function(aSettings, aCanvas) {
     }    
 	}
 	app.touchend = function(e) {
-	  if(model.userTadpole) {
-			model.userTadpole.targetMomentum = 0;
+	  if(scene.userTadpole) {
+			scene.userTadpole.targetMomentum = 0;
 		}
 	}
 	app.touchmove = function(e) {
@@ -213,8 +176,8 @@ var App = function(aSettings, aCanvas) {
 	
 	var getMouseWorldPosition = function() {
 		return {
-			x: (mouse.x + (model.camera.x * model.camera.zoom - canvas.width / 2)) / model.camera.zoom,
-			y: (mouse.y + (model.camera.y * model.camera.zoom  - canvas.height / 2)) / model.camera.zoom
+			x: (mouse.x + (scene.camera.x * scene.camera.zoom - canvas.width / 2)) / scene.camera.zoom,
+			y: (mouse.y + (scene.camera.y * scene.camera.zoom  - canvas.height / 2)) / scene.camera.zoom
 		}
 	}
 	
@@ -229,27 +192,14 @@ var App = function(aSettings, aCanvas) {
 		context = canvas.getContext('2d');
 		resizeCanvas();
 		
-		model = new Model();
-		model.settings = aSettings;
+		scene = new Scene(canvas, context);
+		scene.settings = aSettings;
 		
-		model.userTadpole = new Tadpole();
-		model.userTadpole.id = -1;
-		model.tadpoles[model.userTadpole.id] = model.userTadpole;
-		
-		model.waterParticles = [];
-		for(var i = 0; i < 150; i++) {
-			model.waterParticles.push(new WaterParticle());
-		}
-		
-		model.camera = new Camera(canvas, context, model.userTadpole.x, model.userTadpole.y);
-		
-		model.arrows = {};
-		
-		webSocket 				= new WebSocket( model.settings.socketServer );
+		webSocket 				= new WebSocket( scene.settings.socketServer );
 		webSocket.onopen 		= app.onSocketOpen;
 		webSocket.onclose		= app.onSocketClose;
 		webSocket.onmessage 	= app.onSocketMessage;
 		
-		webSocketService		= new WebSocketService(model, webSocket);
+		webSocketService		= new WebSocketService(scene, webSocket);
 	})();
 }
