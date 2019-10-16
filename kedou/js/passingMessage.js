@@ -1,4 +1,3 @@
-
 // Handle the message inside the webview
 window.addEventListener('message', event => {
 
