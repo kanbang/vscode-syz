@@ -2,16 +2,26 @@
 window.addEventListener('message', event => {
 
     const message = event.data; // The JSON data our extension sent
+    alert(message.command);
 
     switch (message.command) {
-        case 'gender0':
-            app.setGender(0);
+        case 'setting':
+            app.setGender(message.gender);
+            app.setName(message.nickname);
             break;
-        case 'gender1':
-            app.setGender(1);
-            break;
-        case 'gender2':
-            app.setGender(2);
+        default:
             break;
     }
 });
+
+
+//不能重复执行acquireVsCodeApi
+const vscode = acquireVsCodeApi();
+
+function postSetting2Extension(gender, name) {
+    vscode.postMessage({
+        command: 'setting',
+        gender: gender,
+        nickname: name
+    });
+}

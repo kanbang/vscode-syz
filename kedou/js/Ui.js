@@ -40,6 +40,9 @@ $(function() {
 
             app.setName($("#nickname").val());
             app.setGender($("#checkbox").is(":checked") ? 2 : 1);
+
+            postSetting2Extension(app.getGender(), app.getName());
+
         });
 
         $("#idcancel").click(() => {
