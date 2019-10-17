@@ -1,4 +1,8 @@
 
+## 0.1.2 (2019-10-13)
+* tadpole online 
+* gender differentiation by color
+
 ## 0.1.1 (2019-08-6)
 * add tadpole chat room for beta
 

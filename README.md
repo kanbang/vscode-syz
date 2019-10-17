@@ -16,6 +16,7 @@
 * `syz.resLocal`: true (启用本地图片/视频)；false (停用本地图片/视频)。(默认值为**true**)
 * `syz.resWeb`: true (启用网络图片/视频)；false (停用网络图片/视频)。(默认值为**true**)
 * `syz.webResources`: 配置网络资源链接数组
+* `syz.gender`: 设置性别 "男", "女", "保密" (默认值为**保密**)
 
 ```
 如下例子，启用网络图片/视频，支持[jpg/png/mp4]格式：
