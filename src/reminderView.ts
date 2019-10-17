@@ -8,7 +8,6 @@ export class ReminderView {
     private static panelSyz: vscode.WebviewPanel | undefined;
     private static panelKedou: vscode.WebviewPanel | undefined;
 
-
     public static openFolder(context: vscode.ExtensionContext, ) {
         let asset: Asset = new Asset(context);
         const path = asset.getLocalResPath();
@@ -36,9 +35,27 @@ export class ReminderView {
                 this.panelKedou = undefined;
             });
 
+            ////////////////////////////////////////////////////////////
             // Send a message to our webview.
             // You can send any JSON serializable data.
-            this.panelKedou.webview.postMessage({ command: 'gender'+asset.getGender() });
+            this.panelKedou.webview.postMessage({ command: 'setting', gender: asset.getGender(), nickname: "testname" });
+
+            // Handle messages from the webview
+            this.panelKedou.webview.onDidReceiveMessage(
+                message => {
+                    switch (message.command) {
+                        case 'setting':
+                            vscode.window.showErrorMessage(message.gender.toString());
+                            vscode.window.showErrorMessage(message.nickname);
+                            break;
+                        default:
+                            break;
+                    }
+                },
+                undefined,
+                context.subscriptions
+            );
+            ////////////////////////////////////////////////////////////
 
             //TODO
             // this.panelKedou.webview.postMessage({ command: asset.getNickname() });
