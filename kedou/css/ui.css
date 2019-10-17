@@ -72,18 +72,12 @@
 }
 
 .panel__content h4 {
-    padding: 1.5em 0;
+    padding: 0.5em 0;
     border-bottom: 2px solid #ededed;
     color: #865fdf;
-    font-size: 1.15em;
+    font-size: 1.75em;
     font-weight: 700;
     text-transform: uppercase;
-}
-
-.panel__content h2 {
-    padding: .5em 1.5em;
-    font-size: 3em;
-    font-weight: 300;
 }
 
 .panel__content p {
@@ -116,8 +110,8 @@
     background: #8f69e8;
     color: white;
     cursor: pointer;
-    font-size: 2.25em;
-    font-weight: 700;
+    font-size: 1.75em;
+    font-weight: 500;
     text-decoration: none;
     z-index: 1;
     transition: .2s ease;
@@ -215,14 +209,13 @@
 
 /* --------------------gender switch---------------- */
 
-#app-cover {
+#gender-switch {
     outline: none;
     -webkit-tap-highlight-color: transparent;
-    /* min-height: 100%; */
     position: relative;
-    width: 476px;
-    height: 114px;
-    margin: 5px auto 0 auto;
+    width: 440px;
+    height: 100px;
+    /* margin: 5px auto 0 auto; */
     box-sizing: content-box;
     transform: scale(0.5);
 }
@@ -242,18 +235,17 @@
 }
 
 #path {
-    width: 436px;
-    height: 70px;
-    padding: 20px;
+    width: 100%;
+    height: 100%;
     background-color: #f1f3f8;
     border-radius: 100px;
-    box-shadow: 0px 4px 6px #bec7dc;
+    border: 1px solid #bec7dc;
 }
 
 #knob {
     position: absolute;
-    top: 20px;
-    left: 40px;
+    top: 15px;
+    left: 15px;
     width: 70px;
     height: 70px;
     background-color: #fff;
@@ -287,19 +279,17 @@
 
 #gender {
     position: absolute;
-    top: 50%;
-    right: 70px;
+    top: 35px;
+    left: 200px;
     width: 80px;
     font-size: 30px;
     font-family: Roboto, Helvetica;
-    text-align: right;
     line-height: 1;
-    margin-top: -15px;
 }
 
 #fe {
     position: absolute;
-    left: -266px;
+    left: -166px;
     color: #E91E63;
     transition: 0.6s cubic-bezier(0.68, -0.55, 0.27, 1.55) all;
 }
@@ -349,7 +339,7 @@
 }
 
 #checkbox:checked~#gender #fe {
-    left: -38px;
+    left: -33px;
 }
 
 #male.fe:before {
@@ -394,18 +384,38 @@
 
 /* Making the label break the flow */
 
+.floating-label-box {
+    position: relative;
+    margin: auto;
+    width: 220px;
+    height: 50px;
+}
+
+/* Make the label and field look identical on every browser */
+
+.floating-label,
+.floating-label-field {
+    font: inherit;
+    line-height: 1;
+    display: block;
+    margin: auto; 
+}
+
 .floating-label {
-    position: absolute;
-    top: 0;
-    left: 0;
+    display:inline-block;
+    width: auto;
     user-select: none;
     z-index: 1500;
+    text-align:center;
 }
 
 
 /* Hide the browser-specific focus styles */
 
 .floating-label-field {
+    height: 100%;
+    width: 100%;
+    box-sizing : border-box;
     color: rgba(44, 62, 80, .75);
     border-width: 0;
     z-index: 2000;
@@ -421,42 +431,21 @@
 }
 
 
-/* Make the label and field look identical on every browser */
-
-.floating-label,
-.floating-label-field {
-    font: inherit;
-    line-height: 1;
-    display: block;
-    width: calc(300px - 6em);
-    margin: auto;
-}
-
-.floating-label-field,
-.floating-label-wrap {
-    position: relative;
-}
-
-
 /* Input Style #0 */
-
 .floating-label-field--s0 {
-    padding: 1em;
+    padding: 0em 1em;
     transition: border-color .25s ease-in-out;
     color: rgb(134, 95, 223);
     border: 1px solid rgba(134, 95, 223, .2);
-    border-radius: 5px;
     background-color: transparent;
 }
 
 .floating-label-field--s0+.floating-label {
     position: absolute;
-    top: .5em;
-    left: 8em;
-    display: inline-block;
-    width: auto;
-    margin: 0;
-    padding: .75em;
+    top:50%;
+    transform: translateY(-50%);
+    left: 1em;
+
     transition: transform .25s, opacity .25s, padding .25s ease-in-out;
     transform-origin: 0 0;
     color: rgba(134, 95, 223, .5);
@@ -470,14 +459,12 @@
 .floating-label-field--s0:focus+.floating-label,
 .floating-label-field--s0:not(:placeholder-shown)+.floating-label {
     z-index: 2500;
-    padding: .75em;
     transform: translate(0, -2em) scale(.9);
     color: rgba(134, 95, 223, .3);
     background-color: #fff;
 }
 
 .floating-label-field--s0:not(textarea) {
-    max-height: 4em;
     border-radius: 100px;
 }
 
