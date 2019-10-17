@@ -115,6 +115,10 @@ export default class Asset {
         return Utility.getConfiguration().get<string>('title', '');
     }
 
+    public getNickname(): string {
+        return Utility.getConfiguration().get<string>('nickname', '');
+    }
+
     public getGender(): number {
         switch (Utility.getConfiguration().get<string>('gender', '')) {
             case "男":
@@ -123,6 +127,24 @@ export default class Asset {
                 return 2;
             default:
                 return 0;
+        }
+    }
+
+    public setNickname(name: string) {
+        Utility.getConfiguration().update('nickname', name);
+    }
+
+    public setGender(gender: number) {
+        switch (gender) {
+            case 1:
+                Utility.getConfiguration().update('gender', "男");
+                break;
+            case 2:
+                Utility.getConfiguration().update('gender', "女");
+                break;
+            default:
+                Utility.getConfiguration().update('gender', "保密");
+                break;
         }
     }
 

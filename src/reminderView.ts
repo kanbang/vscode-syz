@@ -39,6 +39,9 @@ export class ReminderView {
             // Send a message to our webview.
             // You can send any JSON serializable data.
             this.panelKedou.webview.postMessage({ command: 'gender'+asset.getGender() });
+
+            //TODO
+            // this.panelKedou.webview.postMessage({ command: asset.getNickname() });
         }
 
         if (this.panelSyz) {
