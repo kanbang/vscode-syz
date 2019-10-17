@@ -131,7 +131,14 @@ export default class Asset {
     }
 
     public setNickname(name: string) {
-        Utility.getConfiguration().update('nickname', name);
+        let config = Utility.getConfiguration();
+        let setAsGlobal = true;
+        let ins = config.inspect('nickname');
+        if (ins) {
+            setAsGlobal = ins.workspaceValue === undefined;
+        }
+
+        config.update('nickname', name, setAsGlobal);
     }
 
     public setGender(gender: number) {

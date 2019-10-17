@@ -111,6 +111,8 @@ var WebSocketService = function(scene, webSocket) {
 
     // send config
     this.sendConfig = function() {
+        if (!this.hasConnection)
+            return;
 
         var sendObj = {
             type: 'config',

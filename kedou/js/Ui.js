@@ -67,8 +67,8 @@ $(function() {
             $("#nickname").attr("value", app.getName());
             $("#checkbox").attr("checked", 2 == app.getGender());
             checkbox.change();
-
             panel.addClass("is--open");
+            $("#nickname").focus();
         }
     }
 

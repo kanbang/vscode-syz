@@ -38,15 +38,19 @@ export class ReminderView {
             ////////////////////////////////////////////////////////////
             // Send a message to our webview.
             // You can send any JSON serializable data.
-            this.panelKedou.webview.postMessage({ command: 'setting', gender: asset.getGender(), nickname: "testname" });
+            this.panelKedou.webview.postMessage({
+                command: 'setting',
+                gender: asset.getGender(),
+                nickname: asset.getNickname()
+            });
 
             // Handle messages from the webview
             this.panelKedou.webview.onDidReceiveMessage(
                 message => {
                     switch (message.command) {
                         case 'setting':
-                            vscode.window.showErrorMessage(message.gender.toString());
-                            vscode.window.showErrorMessage(message.nickname);
+                            asset.setGender(message.gender);
+                            asset.setNickname(message.nickname);
                             break;
                         default:
                             break;
@@ -57,8 +61,6 @@ export class ReminderView {
             );
             ////////////////////////////////////////////////////////////
 
-            //TODO
-            // this.panelKedou.webview.postMessage({ command: asset.getNickname() });
         }
 
         if (this.panelSyz) {

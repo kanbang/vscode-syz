@@ -1,4 +1,8 @@
 
+## 0.1.3 (2019-10-17)
+* add nickname and gender configuration
+* setting nickname and gender with gui
+
 ## 0.1.2 (2019-10-13)
 * tadpole online 
 * gender differentiation by color

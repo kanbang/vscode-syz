@@ -1,9 +1,8 @@
 {
-<<<<<<< .mine
     "name": "syz",
     "displayName": "燕姿鼓励师",
     "description": "写代码不再孤单，有孙燕姿与你同在",
-    "version": "0.1.1",
+    "version": "0.1.3",
     "publisher": "kanbang",
     "icon": "logo.jpg",
     "engines": {
@@ -11,85 +10,6 @@
     },
     "categories": [
         "Other"
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-=======
-  "name": "syz",
-  "displayName": "燕姿鼓励师",
-  "description": "写代码不再孤单，有孙燕姿与你同在",
-  "version": "0.1.2",
-  "publisher": "kanbang",
-  "icon": "logo.jpg",
-  "engines": {
-    "vscode": "^1.36.0"
-  },
-  "categories": [
-    "Other"
-  ],
-  "keywords": [
-    "孙燕姿",
-    "提醒",
-    "鼓励",
-    "鼓励师"
-  ],
-  "bugs": {
-    "url": "https://github.com/kanbang/vscode-syz/issues",
-    "email": "kanbang@msn.com"
-  },
-  "homepage": "https://github.com/kanbang/vscode-syz/blob/master/README.md",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/kanbang/vscode-syz.git"
-  },
-  "activationEvents": [
-    "onCommand:syz.showReminderView",
-    "*"
-  ],
-  "main": "./out/extension.js",
-  "contributes": {
-    "commands": [
-      {
-        "command": "syz.showReminderView",
-        "title": "打开提醒页面",
-        "category": "syz"
-      },
-      {
-        "command": "syz.openPhotoFolder",
-        "title": "打开照片文件夹，添加自己喜欢的照片",
-        "category": "syzfolder"
-      }
->>>>>>> .theirs
     ],
     "keywords": [
         "孙燕姿",
