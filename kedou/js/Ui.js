@@ -1,25 +1,25 @@
 var is_panel_showing = false;
 
 
-$(function() {
+$(function () {
     var checkbox = $('#checkbox'),
         path = $('#path'),
         bow = $('#bow'),
         male = $('#male');
 
 
-    checkbox.on('change', function() {
+    checkbox.on('change', function () {
         console.log(1)
         if ($(this).is(':checked')) {
             male.removeClass('ma');
-            setTimeout(function() {
+            setTimeout(function () {
                 path.addClass('fe');
                 male.addClass('fe');
                 bow.addClass('fe');
             }, 390);
         } else {
             male.addClass('ma');
-            setTimeout(function() {
+            setTimeout(function () {
                 path.removeClass('fe');
                 male.removeClass('fe');
                 bow.removeClass('fe');
@@ -33,7 +33,7 @@ $(function() {
     var panel = $("#js-panel");
 
     // On load, init panel
-    var init = function() {
+    var init = function () {
 
         $("#idok").click(() => {
             hidePanel();
@@ -68,7 +68,10 @@ $(function() {
             $("#checkbox").attr("checked", 2 == app.getGender());
             checkbox.change();
             panel.addClass("is--open");
-            $("#nickname").focus();
+
+            //焦点在字符串末 $("#nickname").focus(); 
+            var _val = $("#nickname").val();
+            $("#nickname").val("").focus().val(_val);
         }
     }
 

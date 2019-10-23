@@ -71,16 +71,6 @@ var WebSocketService = function(scene, webSocket) {
         }
     }
 
-    this.redirectHandler = function(data) {
-        if (data.url) {
-            if (authWindow) {
-                authWindow.document.location = data.url;
-            } else {
-                document.location = data.url;
-            }
-        }
-    }
-
     this.processMessage = function(data) {
         var fn = webSocketService[data.type + 'Handler'];
         if (fn) {

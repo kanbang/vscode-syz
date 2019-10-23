@@ -1,13 +1,13 @@
-(function($) {
+(function ($) {
 
-    $.fn.initChat = function() {
+    $.fn.initChat = function () {
         var chartInput = this;
         var chatText = $("#chatText");
         var hidden = true;
         var messageHistory = [];
         var messagePointer = -1;
 
-        var closechat = function() {
+        var closechat = function () {
             hidden = true;
             chartInput.css("opacity", "0");
             messagePointer = messageHistory.length;
@@ -15,7 +15,7 @@
             chatText.text('')
         }
 
-        var updateDimensions = function() {
+        var updateDimensions = function () {
             chatText.text(chartInput.val());
             var width = chatText.width() + 30;
             chartInput.css({
@@ -24,18 +24,20 @@
             });
         };
 
-        chartInput.blur(function(e) {
+        chartInput.blur(function (e) {
             if (is_panel_showing) return;
 
-            setTimeout(function() { chartInput.focus() }, 0.1);
+            setTimeout(function () {
+                chartInput.focus()
+            }, 1);
         });
 
-        chartInput.keydown(function(e) {
+        chartInput.keydown(function (e) {
             if (is_panel_showing) return;
 
             if (chartInput.val().length > 0) {
                 //set timeout because event occurs before text is entered
-                setTimeout(updateDimensions, 0.1);
+                setTimeout(updateDimensions, 1);
                 chartInput.css("opacity", "1");
             } else {
                 closechat();
@@ -63,7 +65,7 @@
             }
         });
 
-        chartInput.keyup(function(e) {
+        chartInput.keyup(function (e) {
             if (is_panel_showing) return;
 
             var k = e.keyCode;
@@ -95,7 +97,19 @@
         chartInput.focus();
     }
 
-    $(function() {
+    $(function () {
         // $('#chat').initChat();
+
+        document.addEventListener('mousedown', (e) => {
+            if (!is_panel_showing) {
+                chartInput.focus()
+            }
+        }, false);
+        document.addEventListener('touchstart', (e) => {
+            if (!is_panel_showing) {
+                chartInput.focus()
+            }
+        }, false);
+
     });
 })(jQuery);
