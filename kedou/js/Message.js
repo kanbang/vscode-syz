@@ -12,7 +12,7 @@ var Message = function(msg) {
 
     this.draw = function(context, x, y, i) {
         var fontsize = 12;
-        context.font = fontsize + "px 'proxima-nova-1','proxima-nova-2', arial, sans-serif";
+        context.font = fontsize + "px 'Microsoft Yahei', arial, sans-serif";
         context.textBaseline = 'top';
 
         var paddingH = 3;

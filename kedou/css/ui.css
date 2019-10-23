@@ -37,11 +37,12 @@
     left: 0;
     height: 100%;
     width: 100%;
+    pointer-events: none;
+
     display: flex;
     align-items: center;
     justify-content: center;
     background: none;
-    font-family: "Lato", Arial, sans-serif;
     -webkit-perspective: 1000px;
     perspective: 1000px;
     -webkit-transform-style: preserve-3d;
@@ -55,6 +56,7 @@
     transition: 0.2s cubic-bezier(0.55, 0.085, 0.68, 0.53);
     -webkit-transform: rotateX(-90deg);
     transform: rotateX(-90deg);
+    pointer-events: auto;
 }
 
 .panel.is--open {
@@ -283,7 +285,6 @@
     left: 200px;
     width: 80px;
     font-size: 30px;
-    font-family: Roboto, Helvetica;
     line-height: 1;
 }
 

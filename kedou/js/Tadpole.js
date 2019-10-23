@@ -173,7 +173,7 @@ var Tadpole = function() {
         var fontsize = 10;
         var opacity = Math.max(Math.min(20 / Math.max(tadpole.timeSinceLastServerUpdate - 300, 1), 1), .2).toFixed(3);
         context.fillStyle = 'rgba(226,219,226,' + opacity + ')';
-        context.font = fontsize + "px 'proxima-nova-1','proxima-nova-2', arial, sans-serif";
+        context.font = fontsize + "px 'Microsoft Yahei', arial, sans-serif";
         context.textBaseline = 'top';
         var width = context.measureText(tadpole.name).width;
         context.fillText(tadpole.name, tadpole.x - width / 2, tadpole.y + 8);

@@ -1,5 +1,3 @@
-
-
 html {
     -webkit-user-select: none;
     cursor: caret;
@@ -7,10 +5,14 @@ html {
 }
 
 body {
-    font-family: "Microsoft YaHei", "proxima-nova-1", "proxima-nova-2", arial, sans-serif;
     margin: 0;
     padding: 0;
     overflow: hidden;
+}
+
+body,td,th{
+    /* font-family: var(--vscode-editor-font-family); */
+    font-family:"Microsoft Yahei"
 }
 
 p {
@@ -49,7 +51,6 @@ p {
 }
 
 #chat {
-    /*font-family: "Arial Rounded MT Bold";*/
     display: block;
     position: absolute;
     top: 60%;
@@ -71,7 +72,6 @@ p {
 }
 
 #cant-connect {
-    /*font-family: "Arial Rounded MT Bold";*/
     display: none;
     position: absolute;
     top: 200px;
@@ -88,62 +88,6 @@ p {
     text-decoration: underline;
 }
 
-#unsupported-browser {
-    display: none;
-    position: absolute;
-    z-index: 2;
-    background-color: #fff;
-    background-image: linear-gradient(top, #fff, #e2e2e2);
-    background-image: -o-linear-gradient(top, #fff, #e2e2e2);
-    background-image: -moz-linear-gradient(top, #fff, #e2e2e2);
-    background-image: -ms-linear-gradient(top, #fff, #e2e2e2);
-    background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #fff), color-stop(1, #e2e2e2));
-    border-radius: 10px;
-    box-shadow: 1px 1px 5px #000;
-    top: 55%;
-    left: 50%;
-    width: 420px;
-    margin: -200px;
-    padding: 35px;
-    font-size: 1.5em;
-    border: 1px solid #fff;
-}
-
-#unsupported-browser p {
-    color: #000;
-    text-shadow: white 1px 1px 0;
-    line-height: 1.4em;
-}
-
-a#force-init-button {
-    font-size: .6em;
-    color: #e47c6c;
-    text-align: center;
-    font-weight: bold;
-    text-decoration: underline;
-}
-
-a#force-init-button:hover {
-    color: #999;
-}
-
-#unsupported-browser ul li {
-    display: inline;
-    list-style-type: none;
-    padding-right: 10px;
-    font-weight: bold;
-    padding: 4px 10px 4px 10px;
-    background-color: #606061;
-    border-radius: 100px;
-    box-shadow: inset -1px -1px -5px #000;
-    text-shadow: none;
-    font-size: .8em;
-}
-
-#unsupported-browser ul {
-    margin: 20px 0px 20px 0px;
-}
-
 #info {
     position: absolute;
     left: 0;
@@ -158,19 +102,20 @@ a#force-init-button:hover {
     margin: 10px 40px 10px 10px;
 }
 
-#info #wtf {
+.quote {
     float: left;
     margin-left: 30px;
     margin-right: 40px;
 }
 
-#wtf a {
+.quote a,
+.quote a:visited {
     color: #c0fdf7;
     text-decoration: none;
 }
 
-#wtf a:hover {
+.quote a:hover,
+.quote a:active {
     color: #fff;
     text-decoration: underline;
 }
-
