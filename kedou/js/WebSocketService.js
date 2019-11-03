@@ -12,6 +12,7 @@ var WebSocketService = function(scene, webSocket) {
         scene.initUserID(data.id);
 
         webSocketService.sendConfig();
+        webSocketService.sendUpdate();
 
         $('#chat').initChat();
 
@@ -67,7 +68,6 @@ var WebSocketService = function(scene, webSocket) {
     this.closedHandler = function(data) {
         if (scene.tadpoles[data.id]) {
             delete scene.tadpoles[data.id];
-            delete scene.arrows[data.id];
         }
     }
 
@@ -83,17 +83,17 @@ var WebSocketService = function(scene, webSocket) {
         $('#cant-connect').fadeIn(300);
     };
 
-    this.sendUpdate = function(tadpole) {
+    this.sendUpdate = function() {
         var sendObj = {
             type: 'update',
-            x: tadpole.x.toFixed(1),
-            y: tadpole.y.toFixed(1),
-            angle: tadpole.angle.toFixed(3),
-            momentum: tadpole.momentum.toFixed(3),
-            name: tadpole.name,
-            gender: tadpole.gender,
-            terminal: tadpole.terminal,
-            weiboID: tadpole.weiboID
+            x: +scene.userTadpole.x.toFixed(1),
+            y: +scene.userTadpole.y.toFixed(1),
+            angle: +scene.userTadpole.angle.toFixed(3),
+            momentum: +scene.userTadpole.momentum.toFixed(3),
+            name: scene.userTadpole.name,
+            gender: scene.userTadpole.gender,
+            terminal: scene.userTadpole.terminal,
+            weiboID: scene.userTadpole.weiboID
         };
 
         webSocket.send(JSON.stringify(sendObj));
@@ -143,7 +143,9 @@ var WebSocketService = function(scene, webSocket) {
 
         var sendObj = {
             type: 'message',
-            message: msg
+            message: msg,
+            x: +scene.userTadpole.x.toFixed(1),
+            y: +scene.userTadpole.y.toFixed(1)
         };
 
         webSocket.send(JSON.stringify(sendObj));

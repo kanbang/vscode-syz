@@ -1,4 +1,8 @@
 
+## 0.1.6 (2019-10-17)
+* update README.md
+* little optimize
+
 ## 0.1.3 (2019-10-17)
 * add nickname and gender configuration
 * setting nickname and gender with gui

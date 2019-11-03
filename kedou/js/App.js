@@ -25,7 +25,7 @@ var App = function(aSettings, aCanvas) {
 
         if (scene.userTadpole.age % 6 == 0 && scene.userTadpole.changed > 1 && webSocketService.hasConnection) {
             scene.userTadpole.changed = 0;
-            webSocketService.sendUpdate(scene.userTadpole);
+            webSocketService.sendUpdate();
         }
 
         scene.update(mouse);
