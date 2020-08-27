@@ -1,0 +1,225 @@
+@media screen and (min-width: 600px) {
+    /* Hitokoto Page */
+    .hitokoto-fullpage {
+        width: 55%;
+    }
+    .background {
+        -webkit-filter: brightness(0.6);
+        -ms-filter: brightness(0.6);
+        -moz-filter: brightness(0.6);
+        filter: brightness(0.6);
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        z-index: -1;
+        background: url(../pic/10.jpg) center no-repeat;
+        background-size: cover;
+    }
+    /* Content Style */
+    .hitokoto-content {
+        /*border-radius: 2px;*/
+        padding: 80px 56px;
+        margin-bottom: 80px;
+    }
+    /*Api Introduction Page*/
+    .apitable {
+        border-collapse: collapse;
+    }
+    .apitable>tbody>tr>td,
+    .apitable>tbody>tr>th {
+        border: 1px solid #d7d7d7;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    /*table{
+ *  *         border-collapse: collapse;
+ *   *             }
+ *    *                 td ,th  {
+ *     *                         border:1px   solid  #d7d7d7;
+ *      *                             }*/
+    .mdl-layout__drawer-button {
+        color: #fff;
+    }
+    .apitable {
+        border-collapse: collapse;
+    }
+    .apitable>td,
+    .apitable>th {
+        border: 1px solid #d7d7d7;
+    }
+    /* Hitokoto Page */
+    .hitokoto-fullpage {
+        margin-bottom: 10vh !important;
+    }
+    .hitokoto-fullpage .word {
+        line-height: 2.6rem !important;
+    }
+    .background {
+        -webkit-filter: brightness(0.6);
+        filter: brightness(0.6);
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        z-index: -1;
+        background: url(../pic/3.jpg) center no-repeat;
+        background-size: cover;
+    }
+    /* Content Style */
+    .hitokoto-content {
+        /*border-radius: 2px;*/
+        padding: 20px;
+    }
+}
+
+/* Hitokoto Page */
+
+.hitokoto-fullpage {
+    position: relative;
+    color: white;
+    z-index: 1;
+    margin-top: 35vh;
+    margin-bottom: 35vh;
+    margin-left: auto;
+    margin-right: auto;
+    font-family: 'Helvetica Neue', Helvetica, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'å¾®è½¯é›…é»‘', Arial, sans-serif;
+}
+
+.hitokoto-fullpage .bracket {
+    font-size: 30px;
+}
+
+.hitokoto-fullpage .bracket.left {
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+
+.hitokoto-fullpage .bracket.right {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+}
+
+.hitokoto-fullpage .word {
+    font-size: 2.3rem;
+    text-align: center;
+    line-height: 50px;
+    word-break: normal;
+    margin: 0;
+    padding: 15px 50px;
+}
+
+.hitokoto-fullpage .author {
+    font-size: 20px;
+    color: rgba(255, 255, 255, 0.8);
+    float: right;
+    margin-top: 40px;
+}
+
+#footer {
+    position: fixed;
+    bottom: 5px;
+    right: 15px;
+    margin-bottom: 0px;
+    text-align: right;
+    z-index: 4;
+    color: white;
+    font-family: 'Helvetica Neue', Helvetica, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'å¾®è½¯é›…é»‘', Arial, sans-serif;
+}
+
+/* About Page */
+
+header {
+    box-shadow: 0px 0px 3px #000000;
+}
+
+.hitokoto-ribbon {
+    width: 100%;
+    height: 25vh;
+    background-color: #3F51B5;
+    -webkit-flex-shrink: 0;
+    -ms-flex-negative: 0;
+    flex-shrink: 0;
+}
+
+.hitokoto-main {
+    margin-top: -20vh;
+    -webkit-flex-shrink: 0;
+    -ms-flex-negative: 0;
+    flex-shrink: 0;
+}
+
+.hitokoto-container {
+    max-width: 1800px;
+    width: calc(100% - 16px);
+    margin: 20px auto 20px auto;
+}
+
+.hitokoto-container .mdl-shadow--2dp,
+.hitokoto-container .mdl-cell--8-col {
+    margin: 0 auto;
+}
+
+.hitokoto-container .mdl-cell--2-col {
+    display: none;
+}
+
+.hitokoto-layout.is-small-screen .demo-content {
+    padding: 40px 28px;
+}
+
+.hitokoto-footer .mdl-mini-footer--link-list a {
+    font-size: 13px;
+}
+
+.ticket-table tr td p {
+    margin: 0;
+    line-height: 0px;
+}
+
+.uploaded {
+    height: 150px;
+    margin: 0 10px 0 0;
+    box-shadow: 0 0 10px #CCC;
+}
+
+.pd-30 {
+    padding: 30px;
+}
+
+.expanded {
+    width: 100%;
+}
+
+.progress-wrap {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.picbox {
+    padding-top: 0;
+    padding-bottom: 10px;
+}
+
+.fix-reply-container {
+    max-width: 1250px;
+    margin: 0;
+}
+
+.fix-reply-container p {
+    width: 100%;
+}
+
+/*Api Introduction Page*/
+
+.apitable {
+    border-collapse: collapse;
+}
+
+.apitable>tbody>tr>td,
+.apitable>tbody>tr>th {
+    border: 1px solid #d7d7d7;
+}
+
+/* Login & Register Page */

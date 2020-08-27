@@ -1,8 +1,8 @@
 {
     "name": "syz",
     "displayName": "燕姿鼓励师",
-    "description": "写代码不再孤单，有孙燕姿与你同在",
-    "version": "0.1.6",
+    "description": "写代码不再孤单，孙燕姿与你同在",
+    "version": "0.1.8",
     "publisher": "kanbang",
     "icon": "logo.jpg",
     "engines": {

@@ -35,12 +35,16 @@ export default class Asset {
                 strSlide += `
                 <section class="centering-wrapper">
                 <p>${title}</p>
-                <div class="imgbox" style="background-image: url(${images[i]})"></div>
+                <svg height="100%" width="100%">
+                    <image xlink:href="${images[i]}" height="100%" width="100%"/>
+                </svg>
                 </section>
                 `;
             }
         }
-
+        // 2020年8月27日 bug fix background-image方式不能显示图片了，换svg-image方式，自适应居中
+        //  <img class="imgbox" src="${images[i]}"/>
+        //  <div class="imgbox" style="background-image: url(${images[i]})"></div>
         return strSlide;
     }
 

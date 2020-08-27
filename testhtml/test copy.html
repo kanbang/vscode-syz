@@ -1,0 +1,373 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<title>YOUR TITLE HERE</title>
+<base target="_blank">
+<!--link rel="icon" type="image/png" href="data:image/png;base64,YOUR-FAVICON-HERE"-->
+<style>
+    body,
+    html {
+        overflow: hidden;
+        font-size: 4vw;
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        padding: 0
+    }
+
+    body.loaded {
+        transition: .3s
+    }
+
+    body.loaded section {
+        transition: opacity .5s
+    }
+
+    section {
+        position: fixed;
+        top: 1vw;
+        bottom: 1vw;
+        left: 1vw;
+        right: 1vw;
+        opacity: 0
+    }
+
+    section:target {
+        z-index: 1
+    }
+
+    body:not(.muted) section:target {
+        opacity: 1
+    }
+
+    img {
+        max-height: 100%;
+        max-width: 100%
+    }
+
+    .incremental:not(.revealed) {
+        visibility: hidden
+    }
+</style>
+<style>
+    /* Your custom styles */
+    section {
+        /*background: transparent right bottom / 15vw auto no-repeat url("YOUR-LOGO.png");*/
+    }
+
+    p {
+        line-height: 1;
+        font-size: 18px;
+        margin-top: 8px;
+        color: lightgray;
+        font-family: 'Microsoft YaHei', 'SF Pro Display', Arial, 'PingFang SC', sans-serif
+    }
+
+    .videobox {
+        width: 100%;
+        height: 100%;
+    }
+
+    .imgbox {
+        width: 100%;
+        height: 100%;
+        background: no-repeat left center/contain;
+    }
+</style>
+<section class="centering-wrapper">
+    <p>小哥哥，小哥哥，代码写久了，喝杯水吧~</p>
+    <div class="imgbox" style="background-image: url(../images/syz/1.jpg)">
+    </div>
+</section>
+<section class="centering-wrapper">
+    <p>小哥哥，小哥哥，代码写久了，喝杯水吧~</p>
+    <div class="imgbox" style="background-image: url(../images/syz/10.jpg)">
+    </div>
+</section>
+<section class="centering-wrapper">
+    <p>小哥哥，小哥哥，代码写久了，喝杯水吧~</p>
+    <div class="imgbox" style="background-image: url(../images/syz/11.jpg)">
+    </div>
+</section>
+<section class="centering-wrapper">
+    <p>小哥哥，小哥哥，代码写久了，喝杯水吧~</p>
+    <div class="imgbox" style="background-image: url(../images/syz/12.jpg)">
+    </div>
+</section>
+<section class="centering-wrapper">
+    <p>小哥哥，小哥哥，代码写久了，喝杯水吧~</p>
+    <div class="imgbox" style="background-image: url(../images/syz/13.jpg)">
+    </div>
+</section>
+<section class="centering-wrapper">
+    <p>小哥哥，小哥哥，代码写久了，喝杯水吧~</p>
+    <div class="imgbox" style="background-image: url(../images/syz/14.jpg)">
+    </div>
+</section>
+<section class="centering-wrapper">
+    <p>小哥哥，小哥哥，代码写久了，喝杯水吧~</p>
+    <div class="imgbox" style="background-image: url(../images/syz/15.jpg)">
+    </div>
+</section>
+<section class="centering-wrapper">
+    <p>小哥哥，小哥哥，代码写久了，喝杯水吧~</p>
+    <div class="imgbox" style="background-image: url(../images/syz/16.jpg)">
+    </div>
+</section>
+<section class="centering-wrapper">
+    <p>小哥哥，小哥哥，代码写久了，喝杯水吧~</p>
+    <div class="imgbox" style="background-image: url(../images/syz/17.jpg)">
+    </div>
+</section>
+<section class="centering-wrapper">
+    <p>小哥哥，小哥哥，代码写久了，喝杯水吧~</p>
+    <div class="imgbox"
+        style="background-image: url(../images/syz/2%20%282%29.jpg)"></div>
+</section>
+<section class="centering-wrapper">
+    <p>小哥哥，小哥哥，代码写久了，喝杯水吧~</p>
+    <div class="imgbox" style="background-image: url(../images/syz/2.jpg)">
+    </div>
+</section>
+<section class="centering-wrapper">
+    <p>小哥哥，小哥哥，代码写久了，喝杯水吧~</p>
+    <div class="imgbox" style="background-image: url(../images/syz/20.jpg)">
+    </div>
+</section>
+<section class="centering-wrapper">
+    <p>小哥哥，小哥哥，代码写久了，喝杯水吧~</p>
+    <div class="imgbox" style="background-image: url(../images/syz/21.jpg)">
+    </div>
+</section>
+<section class="centering-wrapper">
+    <p>小哥哥，小哥哥，代码写久了，喝杯水吧~</p>
+    <div class="imgbox" style="background-image: url(../images/syz/22.jpg)">
+    </div>
+</section>
+<section class="centering-wrapper">
+    <p>小哥哥，小哥哥，代码写久了，喝杯水吧~</p>
+    <div class="imgbox" style="background-image: url(../images/syz/23.jpg)">
+    </div>
+</section>
+<section class="centering-wrapper">
+    <p>小哥哥，小哥哥，代码写久了，喝杯水吧~</p>
+    <div class="imgbox" style="background-image: url(../images/syz/24.jpg)">
+    </div>
+</section>
+<section class="centering-wrapper">
+    <p>小哥哥，小哥哥，代码写久了，喝杯水吧~</p>
+    <div class="imgbox" style="background-image: url(../images/syz/26.jpg)">
+    </div>
+</section>
+<section class="centering-wrapper">
+    <p>小哥哥，小哥哥，代码写久了，喝杯水吧~</p>
+    <div class="imgbox" style="background-image: url(../images/syz/27.jpg)">
+    </div>
+</section>
+<section class="centering-wrapper">
+    <p>小哥哥，小哥哥，代码写久了，喝杯水吧~</p>
+    <div class="imgbox" style="background-image: url(../images/syz/28.jpg)">
+    </div>
+</section>
+<section class="centering-wrapper">
+    <p>小哥哥，小哥哥，代码写久了，喝杯水吧~</p>
+    <div class="imgbox" style="background-image: url(../images/syz/29.jpg)">
+    </div>
+</section>
+<section class="centering-wrapper">
+    <p>小哥哥，小哥哥，代码写久了，喝杯水吧~</p>
+    <div class="imgbox"
+        style="background-image: url(../images/syz/3%20%282%29.jpg)"></div>
+</section>
+<section class="centering-wrapper">
+    <p>小哥哥，小哥哥，代码写久了，喝杯水吧~</p>
+    <div class="imgbox" style="background-image: url(../images/syz/3.jpg)">
+    </div>
+</section>
+<section class="centering-wrapper">
+    <p>小哥哥，小哥哥，代码写久了，喝杯水吧~</p>
+    <div class="imgbox" style="background-image: url(../images/syz/30.jpg)">
+    </div>
+</section>
+<section class="centering-wrapper">
+    <p>小哥哥，小哥哥，代码写久了，喝杯水吧~</p>
+    <div class="imgbox" style="background-image: url(../images/syz/31.jpg)">
+    </div>
+</section>
+<section class="centering-wrapper">
+    <p>小哥哥，小哥哥，代码写久了，喝杯水吧~</p>
+    <div class="imgbox" style="background-image: url(../images/syz/33.jpg)">
+    </div>
+</section>
+<section class="centering-wrapper">
+    <p>小哥哥，小哥哥，代码写久了，喝杯水吧~</p>
+    <div class="imgbox" style="background-image: url(../images/syz/34.jpg)">
+    </div>
+</section>
+<section class="centering-wrapper">
+    <p>小哥哥，小哥哥，代码写久了，喝杯水吧~</p>
+    <div class="imgbox" style="background-image: url(../images/syz/35.jpg)">
+    </div>
+</section>
+<section class="centering-wrapper">
+    <p>小哥哥，小哥哥，代码写久了，喝杯水吧~</p>
+    <div class="imgbox" style="background-image: url(../images/syz/36.jpg)">
+    </div>
+</section>
+<section class="centering-wrapper">
+    <p>小哥哥，小哥哥，代码写久了，喝杯水吧~</p>
+    <div class="imgbox" style="background-image: url(../images/syz/37.jpg)">
+    </div>
+</section>
+<section class="centering-wrapper">
+    <p>小哥哥，小哥哥，代码写久了，喝杯水吧~</p>
+    <div class="imgbox" style="background-image: url(../images/syz/38.jpg)">
+    </div>
+</section>
+<section class="centering-wrapper">
+    <p>小哥哥，小哥哥，代码写久了，喝杯水吧~</p>
+    <div class="imgbox" style="background-image: url(../images/syz/39.jpg)">
+    </div>
+</section>
+<section class="centering-wrapper">
+    <p>小哥哥，小哥哥，代码写久了，喝杯水吧~</p>
+    <div class="imgbox"
+        style="background-image: url(../images/syz/4%20%282%29.jpg)"></div>
+</section>
+<section class="centering-wrapper">
+    <p>小哥哥，小哥哥，代码写久了，喝杯水吧~</p>
+    <div class="imgbox" style="background-image: url(../images/syz/4.jpg)">
+    </div>
+</section>
+<section class="centering-wrapper">
+    <p>小哥哥，小哥哥，代码写久了，喝杯水吧~</p>
+    <div class="imgbox" style="background-image: url(../images/syz/40.jpg)">
+    </div>
+</section>
+<section class="centering-wrapper">
+    <p>小哥哥，小哥哥，代码写久了，喝杯水吧~</p>
+    <div class="imgbox" style="background-image: url(../images/syz/5.jpg)">
+    </div>
+</section>
+<section class="centering-wrapper">
+    <p>小哥哥，小哥哥，代码写久了，喝杯水吧~</p>
+    <div class="imgbox" style="background-image: url(../images/syz/6.jpg)">
+    </div>
+</section>
+<section class="centering-wrapper">
+    <p>小哥哥，小哥哥，代码写久了，喝杯水吧~</p>
+    <div class="imgbox" style="background-image: url(../images/syz/7.jpg)">
+    </div>
+</section>
+<section class="centering-wrapper">
+    <p>小哥哥，小哥哥，代码写久了，喝杯水吧~</p>
+    <div class="imgbox" style="background-image: url(../images/syz/8.jpg)">
+    </div>
+</section>
+<section class="centering-wrapper">
+    <p>小哥哥，小哥哥，代码写久了，喝杯水吧~</p>
+    <div class="imgbox" style="background-image: url(../images/syz/9.jpg)">
+    </div>
+</section>
+<section class="centering-wrapper">
+    <p>小哥哥，小哥哥，代码写久了，喝杯水吧~</p>
+    <div class="imgbox" style="background-image: url(../images/syz/g1.gif)">
+    </div>
+</section>
+<section class="centering-wrapper">
+    <p>小哥哥，小哥哥，代码写久了，喝杯水吧~</p>
+    <div class="imgbox" style="background-image: url(../images/syz/g2.gif)">
+    </div>
+</section>
+<section class="centering-wrapper">
+    <p>小哥哥，小哥哥，代码写久了，喝杯水吧~</p>
+    <div class="imgbox" style="background-image: url(../images/syz/g4.gif)">
+    </div>
+</section>
+<section class="centering-wrapper">
+    <p>小哥哥，小哥哥，代码写久了，喝杯水吧~</p>
+    <div class="imgbox" style="background-image: url(../images/syz/g5.gif)">
+    </div>
+</section>
+<section class="centering-wrapper">
+    <p>小哥哥，小哥哥，代码写久了，喝杯水吧~</p>
+    <div class="imgbox" style="background-image: url(../images/syz/p1.jpg)">
+    </div>
+</section>
+<section class="centering-wrapper">
+    <p>小哥哥，小哥哥，代码写久了，喝杯水吧~</p> <video class="videobox"
+        src="../images/syz/v1.mp4" autoplay="autoplay" loop="loop"
+        preload="auto">
+</section>
+<section class="centering-wrapper">
+    <p>小哥哥，小哥哥，代码写久了，喝杯水吧~</p> <video class="videobox"
+        src="../images/syz/v2.mp4" autoplay="autoplay" loop="loop"
+        preload="auto">
+</section>
+<section class="centering-wrapper">
+    <p>小哥哥，小哥哥，代码写久了，喝杯水吧~</p>
+    <div class="imgbox"
+        style="background-image: url(../images/web/2a3a7fb4c176e9983270caceee0486c9.jpg)">
+    </div>
+</section>
+<section class="centering-wrapper">
+    <p>小哥哥，小哥哥，代码写久了，喝杯水吧~</p>
+    <div class="imgbox"
+        style="background-image: url(../images/web/4fd2132d2090e149db78dfecf76fed65.jpg)">
+    </div>
+</section>
+<section class="centering-wrapper">
+    <p>小哥哥，小哥哥，代码写久了，喝杯水吧~</p> <video class="videobox"
+        src="../images/web/d46a8b52d847fd7a585e97bb147e224f.mp4"
+        autoplay="autoplay" loop="loop" preload="auto">
+</section>
+<section class="centering-wrapper">
+    <p>小哥哥，小哥哥，代码写久了，喝杯水吧~</p> <video class="videobox"
+        src="../images/web/de4bec2276967ae38e4a8e7239533216.mp4"
+        autoplay="autoplay" loop="loop" preload="auto">
+</section>
+<section class="centering-wrapper">
+    <p>小哥哥，小哥哥，代码写久了，喝杯水吧~</p> <video class="videobox"
+        src="../images/web/f2677776a937100eb048c1f061cf6c81.mp4"
+        autoplay="autoplay" loop="loop" preload="auto">
+</section>
+<script>
+    var slides, currentPageNumber, activeSlide, incremental, keyCodeNormalized, setPage, processHash, document_body,
+        revealedCls = "revealed",
+        incrementalSelector = ".incremental",
+        querySelector = "querySelector",
+        loc = location,
+        doc = document;
+    document_body = doc.body, slides = Array.from(doc[querySelector + "All"]("section")), setPage = function (e, d) {
+        if (currentPageNumber) {
+            var r = document.getElementById(currentPageNumber).querySelector(".videobox");
+            r && r.pause()
+        }
+        if (e > slides.length && (e = 1), e <= 0 && (e = slides.length), currentPageNumber = Math.min(slides.length,
+                e || 1), activeSlide = slides[currentPageNumber - 1], slides.map.call(activeSlide[querySelector +
+                "All"](incrementalSelector), function (e) {
+                e.classList.remove(revealedCls)
+            }), loc.hash = currentPageNumber, document_body.style.background = activeSlide.dataset.bg || "",
+            document_body.dataset.slideId = activeSlide.dataset.id || currentPageNumber, !d) {
+            var a = document.getElementById(document_body.dataset.slideId).querySelector(".videobox");
+            a && a.play()
+        }
+    }, addEventListener("keydown", function (e, d) {
+        keyCodeNormalized = e.which - 32, keyCodeNormalized && keyCodeNormalized - 2 && keyCodeNormalized - 7 &&
+            keyCodeNormalized - 8 || (incremental = activeSlide[querySelector](incrementalSelector + ":not(." +
+                revealedCls + ")"), incremental ? incremental.classList.add(revealedCls) : setPage(
+                currentPageNumber + 1), d = 1), keyCodeNormalized - 1 && keyCodeNormalized - 5 &&
+            keyCodeNormalized - 6 || (setPage(currentPageNumber - 1), d = 1), keyCodeNormalized + 5 || (
+                document_body.classList.toggle("muted"), d = 1), keyCodeNormalized - 4 || (setPage(1), d = 1),
+            keyCodeNormalized - 3 || (setPage(1 / 0), d = 1), d && e.preventDefault()
+    }), slides.map(function (e, d) {
+        e.id = d + 1
+    }), slides.map(function (e, d) {
+        var r = e.querySelector(".videobox");
+        r && r.addEventListener("play", function () {
+            currentPageNumber !== Number(e.id) && (r.pause(), console.log("pause", e.id))
+        }, !1)
+    }), loc.hash = Math.ceil(Math.random() * slides.length);
+    var newPageNumber = loc.hash.substr(1);
+    newPageNumber != currentPageNumber && setPage(newPageNumber, !0), document_body.classList.add("loaded");
+</script>

@@ -1,4 +1,11 @@
 
+## 0.1.8 (2020-1-20)
+* optimize text display 
+* update photos (*^_^*)
+
+## 0.1.7 (2019-11-21)
+* adapt to chrome new autoplay-policy
+
 ## 0.1.6 (2019-10-17)
 * update README.md
 * little optimize

@@ -33,7 +33,7 @@ var Message = function(msg) {
         context.fillStyle = 'rgba(255,255,255,' + opacity / 20 + ')';
         drawRoundedRectangle(context, messageBox.x, messageBox.y, messageBox.width, messageBox.height, 10);
         context.fillStyle = 'rgba(255,255,255,' + opacity + ')';
-        context.fillText(message.message, messageBox.x + paddingW, messageBox.y + paddingH, 100);
+        context.fillText(message.message, messageBox.x + paddingW, messageBox.y + paddingH);
     }
 
     var drawRoundedRectangle = function(ctx, x, y, w, h, r) {
@@ -52,3 +52,4 @@ var Message = function(msg) {
         ctx.fill();
     }
 }
+
