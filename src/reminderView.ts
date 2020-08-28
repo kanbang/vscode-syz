@@ -22,7 +22,7 @@ export class ReminderView {
         const title = asset.getTitle();
 
         if (this.panelKedou) {
-            this.panelKedou.webview.html = asset.getWebViewContent(context, 'kedou/index.html');
+            this.panelKedou.webview.html = asset.getWebViewContent('kedou/index.html');
             this.panelKedou.reveal();
         } else {
             this.panelKedou = vscode.window.createWebviewPanel("syz", "花好约猿", vscode.ViewColumn.Two, {
@@ -30,7 +30,7 @@ export class ReminderView {
                 retainContextWhenHidden: true,
             });
 
-            this.panelKedou.webview.html = asset.getWebViewContent(context, 'kedou/index.html');
+            this.panelKedou.webview.html = asset.getWebViewContent('kedou/index.html');
             this.panelKedou.onDidDispose(() => {
                 this.panelKedou = undefined;
             });
@@ -64,7 +64,7 @@ export class ReminderView {
         }
 
         if (this.panelSyz) {
-            this.panelSyz.webview.html = this.generateHtml(title, strSlideSection);
+            this.panelSyz.webview.html = this.generateRemHtml(asset, title, strSlideSection);
 
             this.panelSyz.reveal();
         } else {
@@ -73,7 +73,7 @@ export class ReminderView {
                 retainContextWhenHidden: true,
             });
 
-            this.panelSyz.webview.html = this.generateHtml(title, strSlideSection);
+            this.panelSyz.webview.html = this.generateRemHtml(asset, title, strSlideSection);
             this.panelSyz.onDidDispose(() => {
                 this.panelSyz = undefined;
             });
@@ -83,34 +83,37 @@ export class ReminderView {
     ///////////////////////////////////////////////////////////////////////////////////////////////////
     //protected method
 
-    protected static generateHtml(title: string, strSlideSection: vscode.Uri | string): string {
+    protected static generateRemHtml(asset: Asset, title: string, strSlideSection: string): string {
+        let html = (asset.getWebViewContent( 'reminder/index.html'));
+        html = html.replace("<!-- ${strSlideSection} -->", strSlideSection);
+        return html;
 
         // .imgbox{width: 100%;height: 100%;background: no-repeat left center/contain;}
         // 
-        let html = `<!doctype html>
-        <html lang="en">
-        <meta charset="utf-8">
-        <title>YOUR TITLE HERE</title>
-        <base target="_blank">
-        <!--link rel="icon" type="image/png" href="data:image/png;base64,YOUR-FAVICON-HERE"-->
-        <style>body,html{overflow:hidden;font-size:4vw;width:100%;height:100%;margin:0;padding:0}body.loaded{transition:.3s}body.loaded section{transition:opacity .5s}section{position:fixed;top:1vw;bottom:1vw;left:1vw;right:1vw;opacity:0}section:target{z-index:1}body:not(.muted) section:target{opacity:1}img{max-height:100%;max-width:100%}.incremental:not(.revealed){visibility:hidden}</style>
-        <style>
-            /* Your custom styles */
-            section {
-                /*background: transparent right bottom / 15vw auto no-repeat url("YOUR-LOGO.png");*/
-            }
-            p {  line-height:1; font-size:18px; margin-top:8px; color:lightgray; font-family: 'Microsoft YaHei','SF Pro Display',Arial,'PingFang SC',sans-serif }
-            .videobox{width:100%;height:100%; }
-            .imgbox{width: 100%;height: 100%; object-fit:cover;}
-        </style>
+        // let html = `<!doctype html>
+        // <html lang="en">
+        // <meta charset="utf-8">
+        // <title>YOUR TITLE HERE</title>
+        // <base target="_blank">
+        // <!--link rel="icon" type="image/png" href="data:image/png;base64,YOUR-FAVICON-HERE"-->
+        // <style>body,html{overflow:hidden;font-size:4vw;width:100%;height:100%;margin:0;padding:0}body.loaded{transition:.3s}body.loaded section{transition:opacity .5s}section{position:fixed;top:1vw;bottom:1vw;left:1vw;right:1vw;opacity:0}section:target{z-index:1}body:not(.muted) section:target{opacity:1}img{max-height:100%;max-width:100%}.incremental:not(.revealed){visibility:hidden}</style>
+        // <style>
+        //     /* Your custom styles */
+        //     section {
+        //         /*background: transparent right bottom / 15vw auto no-repeat url("YOUR-LOGO.png");*/
+        //     }
+        //     p {  line-height:1; font-size:18px; margin-top:8px; color:lightgray; font-family: 'Microsoft YaHei','SF Pro Display',Arial,'PingFang SC',sans-serif }
+        //     .videobox{width:100%;height:100%; }
+        //     .imgbox{width: 100%;height: 100%; object-fit:cover;}
+        // </style>
         
-        ${strSlideSection}
+        // ${strSlideSection}
 
-        <script>var slides,currentPageNumber,activeSlide,incremental,keyCodeNormalized,setPage,processHash,document_body,revealedCls="revealed",incrementalSelector=".incremental",querySelector="querySelector",loc=location,doc=document;document_body=doc.body,slides=Array.from(doc[querySelector+"All"]("section")),setPage=function(e,d){if(currentPageNumber){var r=document.getElementById(currentPageNumber).querySelector(".videobox");r&&r.pause()}if(e>slides.length&&(e=1),e<=0&&(e=slides.length),currentPageNumber=Math.min(slides.length,e||1),activeSlide=slides[currentPageNumber-1],slides.map.call(activeSlide[querySelector+"All"](incrementalSelector),function(e){e.classList.remove(revealedCls)}),loc.hash=currentPageNumber,document_body.style.background=activeSlide.dataset.bg||"",document_body.dataset.slideId=activeSlide.dataset.id||currentPageNumber,!d){var a=document.getElementById(document_body.dataset.slideId).querySelector(".videobox");a&&a.play()}},addEventListener("keydown",function(e,d){keyCodeNormalized=e.which-32,keyCodeNormalized&&keyCodeNormalized-2&&keyCodeNormalized-7&&keyCodeNormalized-8||(incremental=activeSlide[querySelector](incrementalSelector+":not(."+revealedCls+")"),incremental?incremental.classList.add(revealedCls):setPage(currentPageNumber+1),d=1),keyCodeNormalized-1&&keyCodeNormalized-5&&keyCodeNormalized-6||(setPage(currentPageNumber-1),d=1),keyCodeNormalized+5||(document_body.classList.toggle("muted"),d=1),keyCodeNormalized-4||(setPage(1),d=1),keyCodeNormalized-3||(setPage(1/0),d=1),d&&e.preventDefault()}),slides.map(function(e,d){e.id=d+1}),slides.map(function(e,d){var r=e.querySelector(".videobox");r&&r.addEventListener("play",function(){currentPageNumber!==Number(e.id)&&(r.pause(),console.log("pause",e.id))},!1)}),loc.hash=Math.ceil(Math.random()*slides.length);var newPageNumber=loc.hash.substr(1);newPageNumber!=currentPageNumber&&setPage(newPageNumber,!0),document_body.classList.add("loaded");</script>
+        // <script>var slides,currentPageNumber,activeSlide,incremental,keyCodeNormalized,setPage,processHash,document_body,revealedCls="revealed",incrementalSelector=".incremental",querySelector="querySelector",loc=location,doc=document;document_body=doc.body,slides=Array.from(doc[querySelector+"All"]("section")),setPage=function(e,d){if(currentPageNumber){var r=document.getElementById(currentPageNumber).querySelector(".videobox");r&&r.pause()}if(e>slides.length&&(e=1),e<=0&&(e=slides.length),currentPageNumber=Math.min(slides.length,e||1),activeSlide=slides[currentPageNumber-1],slides.map.call(activeSlide[querySelector+"All"](incrementalSelector),function(e){e.classList.remove(revealedCls)}),loc.hash=currentPageNumber,document_body.style.background=activeSlide.dataset.bg||"",document_body.dataset.slideId=activeSlide.dataset.id||currentPageNumber,!d){var a=document.getElementById(document_body.dataset.slideId).querySelector(".videobox");a&&a.play()}},addEventListener("keydown",function(e,d){keyCodeNormalized=e.which-32,keyCodeNormalized&&keyCodeNormalized-2&&keyCodeNormalized-7&&keyCodeNormalized-8||(incremental=activeSlide[querySelector](incrementalSelector+":not(."+revealedCls+")"),incremental?incremental.classList.add(revealedCls):setPage(currentPageNumber+1),d=1),keyCodeNormalized-1&&keyCodeNormalized-5&&keyCodeNormalized-6||(setPage(currentPageNumber-1),d=1),keyCodeNormalized+5||(document_body.classList.toggle("muted"),d=1),keyCodeNormalized-4||(setPage(1),d=1),keyCodeNormalized-3||(setPage(1/0),d=1),d&&e.preventDefault()}),slides.map(function(e,d){e.id=d+1}),slides.map(function(e,d){var r=e.querySelector(".videobox");r&&r.addEventListener("play",function(){currentPageNumber!==Number(e.id)&&(r.pause(),console.log("pause",e.id))},!1)}),loc.hash=Math.ceil(Math.random()*slides.length);var newPageNumber=loc.hash.substr(1);newPageNumber!=currentPageNumber&&setPage(newPageNumber,!0),document_body.classList.add("loaded");</script>
         
-        `;
+        // `;
 
-        return html;
+        // return html;
     }
 
 

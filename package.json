@@ -2,7 +2,7 @@
     "name": "syz",
     "displayName": "燕姿鼓励师",
     "description": "写代码不再孤单，孙燕姿与你同在",
-    "version": "0.1.8",
+    "version": "0.1.10",
     "publisher": "kanbang",
     "icon": "logo.jpg",
     "engines": {
@@ -95,12 +95,9 @@
                     "type": "array",
                     "default": [
                         "https://github.com/kanbang/links/raw/master/pic/1.jpg",
-                        "https://github.com/kanbang/links/raw/master/pic/2.jpg",
-                        "https://github.com/kanbang/links/raw/master/video/Stefanie%20Sun/shenqi.mp4",
-                        "https://github.com/kanbang/links/raw/master/video/Stefanie%20Sun/banjuzaijian.mp4",
-                        "https://github.com/kanbang/links/raw/master/video/Stefanie%20Sun/shyhda.mp4"
+                        "https://github.com/kanbang/links/raw/master/pic/2.jpg"
                     ],
-                    "description": "网络资源链接地址，支持[jpg/png/mp4]格式"
+                    "description": "网络资源链接地址，支持[jpg/png]格式"
                 }
             }
         }

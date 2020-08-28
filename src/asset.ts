@@ -13,7 +13,7 @@ export default class Asset {
     public readonly TYPE_URL_IMAGE = '网络链接';
     public readonly TYPE_DEFAULT = '本地图片';
 
-    public constructor(private context: vscode.ExtensionContext) {
+    public constructor(public context: vscode.ExtensionContext) {
     }
 
     public getSlideSection(): string {
@@ -167,8 +167,8 @@ export default class Asset {
      * @param {*} context 上下文
      * @param {*} templatePath 相对于插件根目录的html文件相对路径
      */
-    public getWebViewContent(context: vscode.ExtensionContext, templatePath: string): string {
-        const resourcePath = path.join(context.extensionPath, templatePath);
+    public getWebViewContent(templatePath: string): string {
+        const resourcePath = path.join(this.context.extensionPath, templatePath);
         const dirPath = path.dirname(resourcePath);
         let html = fs.readFileSync(resourcePath, 'utf-8');
         //vscode不支持直接加载本地资源，需要替换成其专有路径格式，这里只是简单的将样式和JS的路径替换
@@ -178,13 +178,13 @@ export default class Asset {
         return html;
     }
 
-    public getKedouLink(context: vscode.ExtensionContext): string {
+    public getKedouLink(): string {
         let folderPath = this.getKedouPath();
         let indexPath0 = path.join(folderPath, 'index0.html');
 
         fs.access(indexPath0, fs.constants.F_OK, (err) => {
             if (err) {
-                let html = this.getWebViewContent(context, 'kedou/index.html');
+                let html = this.getWebViewContent('kedou/index.html');
                 var fd = fs.openSync(indexPath0, 'w');
                 fs.writeSync(fd, html);
                 fs.closeSync(fd);

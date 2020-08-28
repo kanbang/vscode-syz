@@ -1,8 +1,10 @@
 @media screen and (min-width: 600px) {
+
     /* Hitokoto Page */
     .hitokoto-fullpage {
         width: 55%;
     }
+
     .background {
         -webkit-filter: brightness(0.6);
         -ms-filter: brightness(0.6);
@@ -15,16 +17,19 @@
         background: url(../pic/10.jpg) center no-repeat;
         background-size: cover;
     }
+
     /* Content Style */
     .hitokoto-content {
         /*border-radius: 2px;*/
         padding: 80px 56px;
         margin-bottom: 80px;
     }
+
     /*Api Introduction Page*/
     .apitable {
         border-collapse: collapse;
     }
+
     .apitable>tbody>tr>td,
     .apitable>tbody>tr>th {
         border: 1px solid #d7d7d7;
@@ -32,6 +37,7 @@
 }
 
 @media screen and (max-width: 600px) {
+
     /*table{
  *  *         border-collapse: collapse;
  *   *             }
@@ -41,20 +47,25 @@
     .mdl-layout__drawer-button {
         color: #fff;
     }
+
     .apitable {
         border-collapse: collapse;
     }
+
     .apitable>td,
     .apitable>th {
         border: 1px solid #d7d7d7;
     }
+
     /* Hitokoto Page */
     .hitokoto-fullpage {
         margin-bottom: 10vh !important;
     }
+
     .hitokoto-fullpage .word {
         line-height: 2.6rem !important;
     }
+
     .background {
         -webkit-filter: brightness(0.6);
         filter: brightness(0.6);
@@ -65,6 +76,7 @@
         background: url(../pic/3.jpg) center no-repeat;
         background-size: cover;
     }
+
     /* Content Style */
     .hitokoto-content {
         /*border-radius: 2px;*/
@@ -74,12 +86,22 @@
 
 /* Hitokoto Page */
 
+.hitokoto-box {
+    position: absolute;
+    width: 100%;
+    margin: 0px;
+    bottom: 0px;
+    /* background-color: aqua; */
+    z-index: 1;
+    display: inline-block;
+}
+
 .hitokoto-fullpage {
     position: relative;
     color: white;
     z-index: 1;
-    margin-top: 35vh;
-    margin-bottom: 35vh;
+    margin-top: 15vh;
+    margin-bottom: 15vh;
     margin-left: auto;
     margin-right: auto;
     font-family: 'Helvetica Neue', Helvetica, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'å¾®è½¯é›…é»‘', Arial, sans-serif;
@@ -102,7 +124,7 @@
 }
 
 .hitokoto-fullpage .word {
-    font-size: 2.3rem;
+    font-size: 30px;
     text-align: center;
     line-height: 50px;
     word-break: normal;

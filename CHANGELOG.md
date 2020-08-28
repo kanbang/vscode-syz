@@ -1,3 +1,15 @@
+<!--
+ * @Descripttion: 
+ * @version: 0.x
+ * @Author: zhai
+ * @Date: 2019-11-04 09:28:37
+ * @LastEditors: zhai
+ * @LastEditTime: 2020-08-28 14:24:39
+-->
+## 0.1.9 (2020-8-28)
+* remove mp4, cause current version of vscode electron does not include ffmpeg
+* show random word from hitokoto-api
+* update photos (*^_^*)
 
 ## 0.1.8 (2020-1-20)
 * optimize text display 
