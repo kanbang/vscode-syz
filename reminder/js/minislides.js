@@ -43,7 +43,7 @@ setPage = function (newPageNumber, bFirstLoad) {
     document_body.dataset.slideId = activeSlide.dataset.id || currentPageNumber;
 
     //auto play curpage
-    if(!bFirstLoad){
+    if (!bFirstLoad) {
         var curVideo = document.getElementById(document_body.dataset.slideId).querySelector('.videobox');
         curVideo && curVideo.play();
     }
@@ -97,6 +97,59 @@ addEventListener('keydown', function (e, preventDefault) {
     }
 });
 
+addEventListener('mousewheel', function (e, preventDefault) {
+    if (e.wheelDelta > 0) {
+        setPage(currentPageNumber - 1);
+    }else{
+        setPage(currentPageNumber + 1);
+    }
+
+    e.preventDefault();
+});
+
+// https://stackoverflow.com/a/23230280
+addEventListener('touchstart', handleTouchStart, false);
+addEventListener('touchmove', handleTouchMove, false);
+
+var xDown = null;
+var yDown = null;
+
+function getTouches(evt) {
+    return evt.touches || evt.originalEvent.touches;
+}
+
+function handleTouchStart(evt) {
+    const firstTouch = getTouches(evt)[0];
+    xDown = firstTouch.clientX;
+    yDown = firstTouch.clientY;
+}
+
+function handleTouchMove(evt) {
+    if (!xDown || !yDown) {
+        return;
+    }
+
+    var xUp = evt.touches[0].clientX;
+    var yUp = evt.touches[0].clientY;
+
+    var xDiff = xDown - xUp;
+    var yDiff = yDown - yUp;
+
+    if (Math.abs(xDiff) > Math.abs(yDiff)) {
+        if (xDiff < 0) {
+            setPage(currentPageNumber - 1);
+        } else {
+            setPage(currentPageNumber + 1);
+        }
+        preventDefault = 1;
+    } else {
+        if (yDiff < 0) {} else {}
+    }
+
+    xDown = null;
+    yDown = null;
+}
+
 // set slide ids
 slides.map(function (slide, i) {
     slide.id = i + 1;
@@ -107,7 +160,7 @@ slides.map(function (slide, i) {
 slides.map(function (slide, i) {
     var video = slide.querySelector('.videobox');
     if (video) {
-        video.addEventListener("play", function() {
+        video.addEventListener("play", function () {
             if (currentPageNumber !== Number(slide.id)) {
                 video.pause();
                 console.log("pause", slide.id)

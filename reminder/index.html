@@ -4,7 +4,7 @@
  * @Author: zhai
  * @Date: 2020-08-27 17:31:25
  * @LastEditors: zhai
- * @LastEditTime: 2020-08-28 12:38:17
+ * @LastEditTime: 2020-09-03 17:47:18
 -->
 
 
@@ -14,50 +14,21 @@
 
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="css/minislides.css">
     <link rel="stylesheet" href="css/animate.min.css">
     <link rel="stylesheet" href="css/hitokoto.css">
 
     <style>
-        body,
-        html {
-            overflow: hidden;
-            width: 100%;
-            height: 100%;
-            margin: 0;
-            padding: 0
+        html,
+        body {
+            background: #000000;
+            font-family: "Museo Sans 500", "Calibri", sans-serif;
         }
 
         body.loaded {
-            transition: .3s
+            /* default background */
         }
 
-        body.loaded section {
-            transition: opacity .5s
-        }
-
-        section {
-            position: fixed;
-            top: 1vw;
-            bottom: 1vw;
-            left: 1vw;
-            right: 1vw;
-            opacity: 0
-        }
-
-        section:target {
-            z-index: 1
-        }
-
-        body:not(.muted) section:target {
-            opacity: 1
-        }
-
-        .incremental:not(.revealed) {
-            visibility: hidden
-        }
-    </style>
-
-    <style>
         /* Your custom styles */
         section {
             /*background: transparent right bottom / 15vw auto no-repeat url("YOUR-LOGO.png");*/
@@ -65,7 +36,7 @@
 
         p {
             line-height: 1;
-            font-size: 18px;
+            font-size: 22px;
             margin-top: 8px;
             color: lightgray;
             font-family: 'Microsoft YaHei', 'SF Pro Display', Arial, 'PingFang SC', sans-serif
@@ -79,7 +50,7 @@
 </head>
 
 <body style="position:absolute;">
-    
+
     <!-- ${strSlideSection} -->
 
     <!--hitokoto一言-->

@@ -108,7 +108,7 @@
 }
 
 .hitokoto-fullpage .bracket {
-    font-size: 30px;
+    font-size: 28px;
 }
 
 .hitokoto-fullpage .bracket.left {
@@ -124,7 +124,7 @@
 }
 
 .hitokoto-fullpage .word {
-    font-size: 30px;
+    font-size: 28px;
     text-align: center;
     line-height: 50px;
     word-break: normal;

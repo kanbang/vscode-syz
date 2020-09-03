@@ -4,7 +4,7 @@
  * @Author: zhai
  * @Date: 2020-08-27 17:31:25
  * @LastEditors: zhai
- * @LastEditTime: 2020-08-28 10:39:58
+ * @LastEditTime: 2020-09-03 19:23:55
 -->
 
 
@@ -14,50 +14,21 @@
 
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="css/minislides.css">
     <link rel="stylesheet" href="css/animate.min.css">
     <link rel="stylesheet" href="css/hitokoto.css">
 
     <style>
-        body,
-        html {
-            overflow: hidden;
-            width: 100%;
-            height: 100%;
-            margin: 0;
-            padding: 0
+        html,
+        body {
+            background: #000000;
+            font-family: "Museo Sans 500", "Calibri", sans-serif;
         }
 
         body.loaded {
-            transition: .3s
+            /* default background */
         }
 
-        body.loaded section {
-            transition: opacity .5s
-        }
-
-        section {
-            position: fixed;
-            top: 1vw;
-            bottom: 1vw;
-            left: 1vw;
-            right: 1vw;
-            opacity: 0
-        }
-
-        section:target {
-            z-index: 1
-        }
-
-        body:not(.muted) section:target {
-            opacity: 1
-        }
-
-        .incremental:not(.revealed) {
-            visibility: hidden
-        }
-    </style>
-
-    <style>
         /* Your custom styles */
         section {
             /*background: transparent right bottom / 15vw auto no-repeat url("YOUR-LOGO.png");*/
@@ -75,6 +46,61 @@
             width: 100%;
             height: 100%;
         }
+
+        /* typed */
+        .animate-text {
+            font-size: 1.5em;
+        }
+
+        .typed-cursor {
+            opacity: 1;
+            font-size: 1.5em;
+            animation: blink .7s infinite;
+            -webkit-animation: blink .7s infinite;
+            -moz-animation: blink .7s infinite;
+        }
+
+        @keyframes blink {
+            0% {
+                opacity: 0;
+            }
+
+            50% {
+                opacity: 1;
+            }
+
+            100% {
+                opacity: 0;
+            }
+        }
+
+        @-webkit-keyframes blink {
+            0% {
+                opacity: 0;
+            }
+
+            50% {
+                opacity: 1;
+            }
+
+            100% {
+                opacity: 0;
+            }
+        }
+
+        @-moz-keyframes blink {
+            0% {
+                opacity: 0;
+            }
+
+            50% {
+                opacity: 1;
+            }
+
+            100% {
+                opacity: 0;
+            }
+        }
     </style>
 </head>
 
@@ -82,20 +108,26 @@
     <!-- ${strSlideSection} -->
 
     <section class="centering-wrapper">
-        <p>多喝热水</p>
-        <video class="videobox" src="../images/syz/v2.mp4" controls="controls" loop="loop" autoplay="autoplay"
+        <p><span class="animate-text"></span></p>
+        <video class="videobox" src="./test/v1.mp4" controls="controls" loop="loop" autoplay="autoplay"
             preload="metadata">
     </section>
 
     <section class="centering-wrapper">
-        <p>多喝热水</p>
+        <p><span class="animate-text"></span></p>
+        <video class="videobox" src="./test/v2.mp4" controls="controls" loop="loop" autoplay="autoplay"
+            preload="metadata">
+    </section>
+
+    <section class="centering-wrapper">
+        <p><span class="animate-text"></span></p>
         <svg height="100%" width="100%">
-            <image xlink:href="../images/syz/1.jpg" height="100%" width="100%" />
+            <image xlink:href="../images/syz/1.jpeg" height="100%" width="100%" />
         </svg>
     </section>
 
     <section class="centering-wrapper">
-        <p>多喝热水</p>
+        <p><span class="animate-text"></span></p>
         <svg height="100%" width="100%">
             <image xlink:href="../images/syz/2.jpg" height="100%" width="100%" />
         </svg>
@@ -111,11 +143,26 @@
         </div>
     </div>
 
-    <script src="js/fetch.min.js"></script>
     <script src="js/jquery.slim.min.js"></script>
+    <script src="js/fetch.min.js"></script>
     <script src="js/minislides.js"></script>
+    <script src="js/typed.custom.js"></script>
 
     <script>
+        $(function () {
+            $('.animate-text').typed({
+                strings: [
+                    "小哥哥，小哥哥...",
+                    "喝杯水休息一下吧...",
+                ],
+                typeSpeed: 0,
+                backSpeed: 20,
+                backDelay: 3500,
+                loop: true
+            });
+        });
+
+
         // Animate
         $.fn.extend({
             animateCss: function (animationName, callback) {
