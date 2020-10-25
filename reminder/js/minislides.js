@@ -97,15 +97,21 @@ addEventListener('keydown', function (e, preventDefault) {
     }
 });
 
-addEventListener('mousewheel', function (e, preventDefault) {
+addEventListener('wheel', function (e, preventDefault) {
     if (e.wheelDelta > 0) {
         setPage(currentPageNumber - 1);
-    }else{
+    } else {
         setPage(currentPageNumber + 1);
     }
 
     e.preventDefault();
 });
+
+addEventListener('click', function (e, preventDefault) {
+    setPage(currentPageNumber + 1);
+    e.preventDefault();
+});
+
 
 // https://stackoverflow.com/a/23230280
 addEventListener('touchstart', handleTouchStart, false);
@@ -143,7 +149,7 @@ function handleTouchMove(evt) {
         }
         preventDefault = 1;
     } else {
-        if (yDiff < 0) {} else {}
+        if (yDiff < 0) { } else { }
     }
 
     xDown = null;

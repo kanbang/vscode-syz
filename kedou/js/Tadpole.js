@@ -31,6 +31,18 @@ var Tadpole = function() {
     this.changed = 0;
     this.timeSinceLastServerUpdate = 0;
 
+    //跟随模式
+    this.setTarget = function(x, y) {
+        tadpole.targetX = x;
+        tadpole.targetY = y;
+    }
+
+    // 手动模式
+    this.freeTarget = function() {
+        tadpole.targetX = 0;
+        tadpole.targetY = 0;
+    }
+
     this.update = function(mouse) {
         tadpole.timeSinceLastServerUpdate++;
 
@@ -81,6 +93,25 @@ var Tadpole = function() {
     };
 
     this.userUpdate = function(tadpoles, angleTargetX, angleTargetY) {
+        // 跟随模式
+        if (tadpole.targetX != 0 || tadpole.targetY != 0) {
+            let mindis = 20;
+            let maxdis = 80;    //计算Momentum
+            let dis = Math.sqrt((tadpole.targetX - tadpole.x)*(tadpole.targetX - tadpole.x) + (tadpole.targetY - tadpole.y)*(tadpole.targetY - tadpole.y));
+
+            if (dis > mindis) {
+                angleTargetX = tadpole.targetX;
+                angleTargetY = tadpole.targetY;
+                
+                if(dis < maxdis){
+                    tadpole.targetMomentum = tadpole.maxMomentum*dis/maxdis;
+                }
+                else{
+                    tadpole.targetMomentum = tadpole.maxMomentum;
+                }
+            }
+        }
+
         this.age++;
 
         var prevState = {

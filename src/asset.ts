@@ -18,7 +18,6 @@ export default class Asset {
 
     public getSlideSection(): string {
         let images: vscode.Uri[] = this.getResFiles();
-        const title = this.getTitle();
         let strSlide = "";
 
         for (var i = 0; i < images.length; ++i) {
@@ -26,7 +25,7 @@ export default class Asset {
             if (str.substring(str.length - 4) === ".mp4") {
                 strSlide += `
                 <section class="centering-wrapper">
-                <p>${title}</p>
+                <p><span class="animate-text"></span></p>
                 <video class="videobox" src="${images[i]}" autoplay="autoplay" loop="loop" preload="auto">
                 </section>
                 `;
@@ -34,7 +33,7 @@ export default class Asset {
             else {
                 strSlide += `
                 <section class="centering-wrapper">
-                <p>${title}</p>
+                <p><span class="animate-text"></span></p>
                 <svg height="100%" width="100%">
                     <image xlink:href="${images[i]}" height="100%" width="100%"/>
                 </svg>
@@ -111,12 +110,12 @@ export default class Asset {
         return Utility.getConfiguration().get<boolean>('resWeb', true);
     }
 
-    protected getWebResources() {
+    protected getWebResources(): string[] {
         return Utility.getConfiguration().get<string[]>('webResources', []);
     }
 
-    public getTitle(): string {
-        return Utility.getConfiguration().get<string>('title', '');
+    public getTitle(): string[] {
+        return Utility.getConfiguration().get<string[]>('title', []);
     }
 
     public getNickname(): string {

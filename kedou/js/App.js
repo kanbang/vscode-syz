@@ -1,4 +1,4 @@
-var App = function(aSettings, aCanvas) {
+var App = function (aSettings, aCanvas) {
     var app = this;
 
     var scene,
@@ -10,7 +10,7 @@ var App = function(aSettings, aCanvas) {
         keyNav = { x: 0, y: 0 },
         messageQuota = 5;
 
-    app.update = function() {
+    app.update = function () {
         if (messageQuota < 5 && scene.userTadpole.age % 50 == 0) { messageQuota++; }
 
         // Update usertadpole
@@ -32,29 +32,29 @@ var App = function(aSettings, aCanvas) {
     };
 
 
-    app.getName = function(name) {
+    app.getName = function (name) {
         return scene.userTadpole.name;
     }
 
-    app.getGender = function(gender) {
+    app.getGender = function (gender) {
         return scene.userTadpole.gender;
     }
 
-    app.setName = function(name) {
+    app.setName = function (name) {
         scene.userTadpole.name = name;
         webSocketService.sendConfig();
     }
 
-    app.setGender = function(gender) {
+    app.setGender = function (gender) {
         scene.userTadpole.gender = gender;
         webSocketService.sendConfig();
     }
 
-    app.draw = function() {
+    app.draw = function () {
         scene.draw();
     };
 
-    app.onSocketOpen = function(e) {
+    app.onSocketOpen = function (e) {
         //console.log('Socket opened!', e);
 
         //FIXIT: Proof of concept. refactor!
@@ -65,19 +65,19 @@ var App = function(aSettings, aCanvas) {
         // end of proof of concept code.
     };
 
-    app.onSocketClose = function(e) {
+    app.onSocketClose = function (e) {
         //console.log('Socket closed!', e);
         webSocketService.connectionClosed();
     };
 
-    app.onSocketMessage = function(e) {
+    app.onSocketMessage = function (e) {
         try {
             var data = JSON.parse(e.data);
             webSocketService.processMessage(data);
-        } catch (e) {}
+        } catch (e) { }
     };
 
-    app.sendMessage = function(msg) {
+    app.sendMessage = function (msg) {
 
         if (messageQuota > 0) {
             messageQuota--;
@@ -86,11 +86,14 @@ var App = function(aSettings, aCanvas) {
 
     }
 
-    app.authorize = function(token, verifier) {
+    app.authorize = function (token, verifier) {
         webSocketService.authorize(token, verifier);
     }
 
-    app.mousedown = function(e) {
+    app.mousedown = function (e) {
+        // 键鼠输入，取消跟随
+        app.freeTarget();
+        
         mouse.clicking = true;
 
         if (mouse.tadpole && mouse.tadpole.hover && mouse.tadpole.onclick(e)) {
@@ -103,18 +106,21 @@ var App = function(aSettings, aCanvas) {
 
     };
 
-    app.mouseup = function(e) {
+    app.mouseup = function (e) {
         if (scene.userTadpole && e.which == 1) {
             scene.userTadpole.targetMomentum = 0;
         }
     };
 
-    app.mousemove = function(e) {
+    app.mousemove = function (e) {
         mouse.x = e.clientX;
         mouse.y = e.clientY;
     };
 
-    app.keydown = function(e) {
+    app.keydown = function (e) {
+        // 键鼠输入，取消跟随
+        app.freeTarget();
+
         if (e.keyCode == keys.up) {
             keyNav.y = -1;
             scene.userTadpole.momentum = scene.userTadpole.targetMomentum = scene.userTadpole.maxMomentum;
@@ -133,7 +139,7 @@ var App = function(aSettings, aCanvas) {
             e.preventDefault();
         }
     };
-    app.keyup = function(e) {
+    app.keyup = function (e) {
         if (e.keyCode == keys.up || e.keyCode == keys.down) {
             keyNav.y = 0;
             if (keyNav.x == 0 && keyNav.y == 0) {
@@ -149,7 +155,7 @@ var App = function(aSettings, aCanvas) {
         }
     };
 
-    app.touchstart = function(e) {
+    app.touchstart = function (e) {
         e.preventDefault();
         mouse.clicking = true;
 
@@ -163,12 +169,12 @@ var App = function(aSettings, aCanvas) {
             mouse.y = touch.clientY;
         }
     }
-    app.touchend = function(e) {
+    app.touchend = function (e) {
         if (scene.userTadpole) {
             scene.userTadpole.targetMomentum = 0;
         }
     }
-    app.touchmove = function(e) {
+    app.touchmove = function (e) {
         e.preventDefault();
 
         var touch = e.changedTouches.item(0);
@@ -178,25 +184,32 @@ var App = function(aSettings, aCanvas) {
         }
     }
 
+    app.setTarget = function (x, y) {
+        scene.userTadpole.setTarget(x, y);
+    }
 
-    app.resize = function(e) {
+    app.freeTarget = function () {
+        scene.userTadpole.freeTarget();
+    }
+
+    app.resize = function (e) {
         resizeCanvas();
     };
 
-    var getMouseWorldPosition = function() {
+    var getMouseWorldPosition = function () {
         return {
             x: (mouse.x + (scene.camera.x * scene.camera.zoom - canvas.width / 2)) / scene.camera.zoom,
             y: (mouse.y + (scene.camera.y * scene.camera.zoom - canvas.height / 2)) / scene.camera.zoom
         }
     }
 
-    var resizeCanvas = function() {
+    var resizeCanvas = function () {
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
     };
 
     // Constructor
-    (function() {
+    (function () {
         canvas = aCanvas;
         context = canvas.getContext('2d');
         resizeCanvas();

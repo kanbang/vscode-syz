@@ -6,7 +6,8 @@
     <title>蝌蚪聊天室 </title>
     <link rel="stylesheet" type="text/css" href="css/main.css" />
     <link rel="stylesheet" type="text/css" href="css/ui.css" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=0" />
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=0" />
     <meta name="title" content="Tadpole" />
     <meta name="description" content="" />
 </head>
@@ -23,9 +24,72 @@
         <div id="instructions">
             直接打字开始聊天~
         </div>
+
+        <!-- new -->
+        <div id="online-users">
+            <div class="header">
+                <h3>在线列表</h3>
+                <div @click.stop="toggleOnlineUsers">{{ showOnlineUsersText }}</div>
+            </div>
+            <span>在线：{{ onlineCount }}只</span>
+            <div class="users" v-if="showOnlineUsers">
+                <template v-for="(user,index) in onlineUsers">
+                    <div class="user" :key="index">
+                        <div @click.stop="toUserPos(user.user)" class="name"><span title="点击瞬移到玩家身边"
+                                class="name">{{ user.name }}</span><span
+                                class="pos">[{{ user.user.x | parseInt }},{{ user.user.y | parseInt }}]</span>
+                        </div>
+                        <div class="follow" @click.stop="onClickFollowUser(user)"
+                            v-if="followUser==null || user.id !== followUser.id">跟随
+                        </div>
+                        <div class="follow" @click.stop="onClickAroundUser(user)"
+                            v-if="followUser==null || user.id !== followUser.id">环绕
+                        </div>
+                        <div class="cancel-follow" @click.stop="onClickCancelFollow" v-else-if="type == 'follow'">取消跟随
+                        </div>
+                        <div class="cancel-follow" @click.stop="onClickCancelFollow" v-else>取消环绕</div>
+
+                        <!-- <div class="follow" @click.stop="onClickDelUser(user)"
+                                v-if="delUser==null || user.id !== delUser.id">屏蔽
+                            </div>
+                            <div class="cancel-follow" @click.stop="onClickCancelDack(user)" v-else>取消屏蔽</div> -->
+                    </div>
+                </template>
+            </div>
+
+        </div>
+        <div id="world">
+            <div class="header">
+                <h3>世界动态</h3>
+                <div @click.stop="toggleMessages">{{ showText }}</div>
+            </div>
+            <div class="logs" ref="messages" v-if="showMessages">
+                <template v-for="(message,index) in messages">
+                    <div class="message" v-if="message.type === 'message'" :key="index">
+                        <div><span @click.stop="toUserPos(message.user)" title="点击瞬移到玩家身边"
+                                class="name">{{ message.user.name }}</span><span title="点击前往"
+                                @click.stop="setTarget(message.message.x,message.message.y)"
+                                class="pos">[{{ message.message.x }},{{ message.message.y }}]</span>:
+                            <span class="content"
+                                v-bind:urlFlag="dealWithFlag(message.message.content)">{{ message.message.content }}</span>
+                        </div>
+                    </div>
+                    <div class="connect" v-if="message.type === 'connect'" :key="index">
+                        <span class="name" @click.stop="toUserPos(message.user)">{{ message.user.name }}</span>进入了池塘
+                    </div>
+                    <div class="disconnect" v-if="message.type === 'disconnect'" :key="index">
+                        {{ message.message }}
+                    </div>
+                </template>
+            </div>
+        </div>
+        <!-- new end-->
+
+
         <aside id="info">
             <section>
-                <div class="quote"> Tadpoles fork from <a href="http://rumpetroll.com/" target="_blank">rumpetroll.com</a> &nbsp;&nbsp;&nbsp;&nbsp; </div>
+                <div class="quote"> Tadpoles fork from <a href="http://rumpetroll.com/"
+                        target="_blank">rumpetroll.com</a> &nbsp;&nbsp;&nbsp;&nbsp; </div>
                 <!-- <div> Tadpoles fork from <a href="http://rumpetroll.com/" target="_blank">rumpetroll.com</a> &nbsp;&nbsp;&nbsp;&nbsp; 后端使用Node+TypeScript </div> -->
             </section>
         </aside>
@@ -45,7 +109,8 @@
                 <h4>设置</h4>
 
                 <div class="floating-label-box">
-                    <input type="text" class="floating-label-field floating-label-field--s0" id="nickname" placeholder="昵称">
+                    <input type="text" class="floating-label-field floating-label-field--s0" id="nickname"
+                        placeholder="昵称">
                     <label for="nickname" class="floating-label">昵称</label>
                 </div>
 
@@ -78,10 +143,11 @@
 
     <!-- vscode扩展不支持cookie -->
 
+    <script src="js/lib/vue-2.6.11.min.js"></script>
     <script src="js/passingMessage.js"></script>
-    
+
     <script src="js/lib/parseUri.js"></script>
-    <script src="js/jquery.min.js"></script>
+    <script src="js/lib/jquery.min.js"></script>
     <script src="js/lib/Stats.js"></script>
 
     <script src="js/App.js"></script>
@@ -101,6 +167,83 @@
     <script src="js/main.js"></script>
     <script src="js/Ui.js"></script>
     <script src="js/formControls.js"></script>
+    <script src="js/World.js"></script>
+
+
+    <script type="text/javascript">
+        $("#world").bind("DOMNodeInserted", function (e) {
+            $(".logs .message .content[urlFlag='1']").each(function () {
+                var text = $(this).html();
+                if (text.indexOf("[") != -1 && text.indexOf("]") != -1) {
+                    text = replaceUrl(text);
+                    $(this).attr('urlFlag', '0');
+                    $(this).html(text);
+                }
+            });
+        })
+
+        function replaceUrl(text) {
+            if (text.indexOf("[") != -1 && text.indexOf("]") != -1) {
+                var address = text.substring(text.indexOf("[") + 1, text.indexOf("]"));
+                address = '<a href="http://' + address + '" target="_blank">' + address + '</a>';
+                var replaceOld = text.substring(text.indexOf("["), text.indexOf("]") + 1);
+                text = text.replace(replaceOld, address);
+            }
+            return text;
+        }
+
+        function replaceUrl2(text) {
+            if (text.indexOf("[") != -1 && text.indexOf("]") != -1) {
+                text = text.replace('[', '');
+                text = text.replace(']', '');
+            }
+            return text;
+        }
+
+        function dealWithFlag(content) {
+            if (content.indexOf("[") != -1 && content.indexOf("]") != -1) {
+                return '1';
+            } else {
+                return '0';
+            }
+        } $("#world").bind("DOMNodeInserted", function (e) {
+            $(".logs .message .content[urlFlag='1']").each(function () {
+                var text = $(this).html();
+                if (text.indexOf("[") != -1 && text.indexOf("]") != -1) {
+                    text = replaceUrl(text);
+                    $(this).attr('urlFlag', '0');
+                    $(this).html(text);
+                }
+            });
+        })
+
+
+        function replaceUrl(text) {
+            if (text.indexOf("[") != -1 && text.indexOf("]") != -1) {
+                var address = text.substring(text.indexOf("[") + 1, text.indexOf("]"));
+                address = '<a href="http://' + address + '" target="_blank">' + address + '</a>';
+                var replaceOld = text.substring(text.indexOf("["), text.indexOf("]") + 1);
+                text = text.replace(replaceOld, address);
+            }
+            return text;
+        }
+
+        function replaceUrl2(text) {
+            if (text.indexOf("[") != -1 && text.indexOf("]") != -1) {
+                text = text.replace('[', '');
+                text = text.replace(']', '');
+            }
+            return text;
+        }
+
+        function dealWithFlag(content) {
+            if (content.indexOf("[") != -1 && content.indexOf("]") != -1) {
+                return '1';
+            } else {
+                return '0';
+            }
+        }
+    </script>
 </body>
 
 </html>

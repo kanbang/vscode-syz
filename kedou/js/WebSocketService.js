@@ -1,4 +1,4 @@
-var WebSocketService = function(scene, webSocket) {
+var WebSocketService = function (scene, webSocket) {
     var webSocketService = this;
 
     var webSocket = webSocket;
@@ -6,7 +6,7 @@ var WebSocketService = function(scene, webSocket) {
 
     this.hasConnection = false;
 
-    this.welcomeHandler = function(data) {
+    this.welcomeHandler = function (data) {
         webSocketService.hasConnection = true;
 
         scene.initUserID(data.id);
@@ -18,7 +18,7 @@ var WebSocketService = function(scene, webSocket) {
 
     };
 
-    this.updateHandler = function(data) {
+    this.updateHandler = function (data) {
         var newtp = false;
 
         if (!scene.tadpoles[data.id]) {
@@ -42,6 +42,13 @@ var WebSocketService = function(scene, webSocket) {
         if (newtp) {
             tadpole.x = data.x;
             tadpole.y = data.y;
+
+            // 更新列表
+            vmLog.updateUsers(scene.tadpoles);
+            vmLog.addLog({
+                type: "connect",
+                user: tadpole,
+            });
         } else {
             tadpole.targetX = data.x;
             tadpole.targetY = data.y;
@@ -56,34 +63,52 @@ var WebSocketService = function(scene, webSocket) {
         tadpole.timeSinceLastServerUpdate = 0;
     }
 
-    this.messageHandler = function(data) {
+    this.messageHandler = function (data) {
         var tadpole = scene.tadpoles[data.id];
         if (!tadpole) {
             return;
         }
         tadpole.timeSinceLastServerUpdate = 0;
         tadpole.messages.push(new Message(data.message));
+
+        // 消息日志
+        vmLog.addLog({
+            user: tadpole,
+            message: {
+                content: data.message,
+                time: new Date(),
+                x: parseInt(tadpole.x),
+                y: parseInt(tadpole.y),
+            },
+            type: "message",
+        });
     }
 
-    this.closedHandler = function(data) {
+    this.closedHandler = function (data) {
         if (scene.tadpoles[data.id]) {
+            vmLog.addLog({
+                type: "disconnect",
+                message: scene.tadpoles[data.id].name + "离开了池塘",
+            });
+
             delete scene.tadpoles[data.id];
+            vmLog.updateUsers(scene.tadpoles);
         }
     }
 
-    this.processMessage = function(data) {
+    this.processMessage = function (data) {
         var fn = webSocketService[data.type + 'Handler'];
         if (fn) {
             fn(data);
         }
     }
 
-    this.connectionClosed = function() {
+    this.connectionClosed = function () {
         webSocketService.hasConnection = false;
         $('#cant-connect').fadeIn(300);
     };
 
-    this.sendUpdate = function() {
+    this.sendUpdate = function () {
         var sendObj = {
             type: 'update',
             x: +scene.userTadpole.x.toFixed(1),
@@ -100,7 +125,7 @@ var WebSocketService = function(scene, webSocket) {
     }
 
     // send config
-    this.sendConfig = function() {
+    this.sendConfig = function () {
         if (!this.hasConnection)
             return;
 
@@ -117,7 +142,7 @@ var WebSocketService = function(scene, webSocket) {
     }
 
 
-    this.sendMessage = function(msg) {
+    this.sendMessage = function (msg) {
         //"name:jet"
         var regexp = /name: ?(.+)/i;
         if (regexp.test(msg)) {
@@ -151,7 +176,7 @@ var WebSocketService = function(scene, webSocket) {
         webSocket.send(JSON.stringify(sendObj));
     }
 
-    this.authorize = function(token, verifier) {
+    this.authorize = function (token, verifier) {
         var sendObj = {
             type: 'authorize',
             token: token,

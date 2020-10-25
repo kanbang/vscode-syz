@@ -119,3 +119,196 @@ p {
     color: #fff;
     text-decoration: underline;
 }
+
+
+/* new world */
+
+
+#world {
+    border-radius: 10px;
+    padding: 10px;
+    width: 300px;
+    position: absolute;
+    bottom: 50px;
+    right: 60px;
+    color: white;
+    z-index: 100;
+    background: rgba(0, 0, 0, .3);
+}
+
+#world > .header {
+    display: flex;
+    font-size: 0.8em;
+    margin-bottom: 5px;
+}
+
+#world > .header > h3 {
+    flex: 1;
+}
+
+#world > .logs {
+    width: 300px;
+    max-height: 200px;
+    overflow: scroll;
+}
+
+#world > .logs::-webkit-scrollbar {
+    width: 4px;
+    height: 4px;
+    scrollbar-arrow-color: #fff;
+}
+
+#world > .logs::-webkit-scrollbar-thumb {
+    border-radius: 5px;
+    -webkit-box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+    background: rgba(255, 255, 255, 0.2);
+    scrollbar-arrow-color: red;
+}
+
+#world > .logs::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+    border-radius: 0;
+    background: rgba(255, 255, 255, 0.1);
+}
+
+#world > .logs > .message {
+    display: flex;
+}
+
+#world > .logs > .message .content {
+    color: #999;
+    font-size: 0.8em;
+}
+
+#world > .logs > .message .name {
+    color: white;
+    font-weight: bold;
+    font-size: 0.8em;
+}
+
+
+#world > .logs > .message .name:hover {
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+#world > .logs > .message .pos {
+    color: #999;
+    font-size: 0.8em;
+}
+
+#world > .logs > .message .pos:hover {
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+#online-users, #dack-users {
+    border-radius: 10px;
+    padding: 10px;
+    width: 25vw;
+    position: absolute;
+    left: 60px;
+    color: white;
+    z-index: 99;
+    background: rgba(0, 0, 0, .3);
+}
+
+#online-users {
+    bottom: 50px;
+}
+
+#dack-users {
+    top:30px;
+}
+
+#online-users > .header,#dack-users > .dacker{
+    display: flex;
+    font-size: 0.8em;
+    margin-bottom: 5px;
+}
+
+#online-users > .header > h3,#dack-users > .dacker > h3 {
+    flex: 1;
+}
+
+#online-users > span ,#dack-users > span{
+    font-size: 0.8em;
+    color: #999999;
+    display: inline-block;
+}
+
+#online-users > .users ,#dack-users > .users{
+    max-height: 200px;
+    font-size: 0.8em;
+    overflow: scroll;
+}
+
+#dack-users > .users::-webkit-scrollbar,#online-users > .users::-webkit-scrollbar {
+    width: 4px;
+    height: 4px;
+    scrollbar-arrow-color: #fff;
+}
+
+#dack-users > .users::-webkit-scrollbar-thumb,#online-users > .users::-webkit-scrollbar-thumb {
+    border-radius: 5px;
+    -webkit-box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+    background: rgba(255, 255, 255, 0.2);
+    scrollbar-arrow-color: red;
+}
+
+#dack-users > .users::-webkit-scrollbar-track,#online-users > .users::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+    border-radius: 0;
+    background: rgba(255, 255, 255, 0.1);
+}
+
+#dack-users  .users .name:hover,#online-users .users .name:hover {
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+#online-users .users .user .pos {
+    color: #999;
+}
+
+.users > .user {
+    display: flex;
+    padding: 5px 0;
+}
+
+.users > .user .name {
+    flex: 1;
+}
+
+.users > .user .follow {
+    display: none;
+    cursor: pointer;
+    background: rgba(255, 255, 255, .5);
+    padding: 2px;
+    border-radius: 2px;
+}
+
+.users > .user .cancel-follow {
+    cursor: pointer;
+}
+
+.users > .user:hover .follow {
+    margin-right: 8px;
+    display: block;
+}
+
+.logs .connect, .disconnect {
+    margin-right: 8px;
+    color: #999;
+    font-size: 0.8em;
+}
+
+.logs .connect .name {
+    color: white;
+    font-weight: bold;
+}
+
+.logs .connect .name:hover {
+    cursor: pointer;
+    text-decoration: underline;
+}

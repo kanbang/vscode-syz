@@ -83,9 +83,13 @@ export class ReminderView {
     ///////////////////////////////////////////////////////////////////////////////////////////////////
     //protected method
 
-    protected static generateRemHtml(asset: Asset, title: string, strSlideSection: string): string {
+    protected static generateRemHtml(asset: Asset, title: string[], strSlideSection: string): string {
         let html = (asset.getWebViewContent( 'reminder/index.html'));
         html = html.replace("<!-- ${strSlideSection} -->", strSlideSection);
+
+        var hello = JSON.stringify(title);
+        html = html.replace("<!-- ${hello} -->", hello);
+        
         return html;
 
         // .imgbox{width: 100%;height: 100%;background: no-repeat left center/contain;}

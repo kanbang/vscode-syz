@@ -6,6 +6,11 @@
  * @LastEditors: zhai
  * @LastEditTime: 2020-08-28 14:24:39
 -->
+## 0.1.11 (2020-9-5)
+* update tadpole chat room
+* switch photos by mouse click and wheel
+* update photos (*^_^*)
+
 ## 0.1.9 (2020-8-28)
 * remove mp4, cause current version of vscode electron does not include ffmpeg
 * show random word from hitokoto-api
