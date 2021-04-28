@@ -4,8 +4,15 @@
  * @Author: zhai
  * @Date: 2019-11-04 09:28:37
  * @LastEditors: zhai
- * @LastEditTime: 2020-08-28 14:24:39
+ * @LastEditTime: 2020-10-26 18:08:26
 -->
+
+
+## 0.1.12 (2020-10-26)
+* websocket which chat room used has been banned in webview. I'm trying to find another way...
+* update photos (*^_^*)
+
+
 ## 0.1.11 (2020-9-5)
 * update tadpole chat room
 * switch photos by mouse click and wheel

@@ -10,5 +10,6 @@
     "typescript.tsc.autoDetect": "off",
     "syz.gender": "男",
     "kedou.gender": "女",
-    "liveServer.settings.port": 5502
+    "liveServer.settings.port": 5502,
+    "seat.enable": false
 }

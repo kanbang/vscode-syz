@@ -6,12 +6,23 @@ var App = function (aSettings, aCanvas) {
         context,
         webSocket,
         webSocketService,
-        mouse = { x: 0, y: 0, worldx: 0, worldy: 0, tadpole: null },
-        keyNav = { x: 0, y: 0 },
+        mouse = {
+            x: 0,
+            y: 0,
+            worldx: 0,
+            worldy: 0,
+            tadpole: null
+        },
+        keyNav = {
+            x: 0,
+            y: 0
+        },
         messageQuota = 5;
 
     app.update = function () {
-        if (messageQuota < 5 && scene.userTadpole.age % 50 == 0) { messageQuota++; }
+        if (messageQuota < 5 && scene.userTadpole.age % 50 == 0) {
+            messageQuota++;
+        }
 
         // Update usertadpole
         if (keyNav.x != 0 || keyNav.y != 0) {
@@ -74,7 +85,7 @@ var App = function (aSettings, aCanvas) {
         try {
             var data = JSON.parse(e.data);
             webSocketService.processMessage(data);
-        } catch (e) { }
+        } catch (e) {}
     };
 
     app.sendMessage = function (msg) {
@@ -93,7 +104,7 @@ var App = function (aSettings, aCanvas) {
     app.mousedown = function (e) {
         // 键鼠输入，取消跟随
         app.freeTarget();
-        
+
         mouse.clicking = true;
 
         if (mouse.tadpole && mouse.tadpole.hover && mouse.tadpole.onclick(e)) {
@@ -221,6 +232,7 @@ var App = function (aSettings, aCanvas) {
         webSocket.onopen = app.onSocketOpen;
         webSocket.onclose = app.onSocketClose;
         webSocket.onmessage = app.onSocketMessage;
+
 
         webSocketService = new WebSocketService(scene, webSocket);
     })();

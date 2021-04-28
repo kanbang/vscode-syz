@@ -1,12 +1,10 @@
 import * as vscode from 'vscode';
-import { Utility } from './utility';
 import * as path from 'path';
 import * as fs from 'fs';
+import { Md5 } from "md5-typescript";
 
 import axios from 'axios';
 // import * as WebRequest from "web-request";
-
-import { Md5 } from "md5-typescript";
 
 
 export default class Asset {
@@ -102,28 +100,32 @@ export default class Asset {
     }
 
 
+    public getConfiguration(): vscode.WorkspaceConfiguration {
+        return vscode.workspace.getConfiguration("syz");
+    }
+
     protected enableLocalRes(): boolean {
-        return Utility.getConfiguration().get<boolean>('resLocal', true);
+        return this.getConfiguration().get<boolean>('resLocal', true);
     }
 
     protected enableWebRes(): boolean {
-        return Utility.getConfiguration().get<boolean>('resWeb', true);
+        return this.getConfiguration().get<boolean>('resWeb', true);
     }
 
     protected getWebResources(): string[] {
-        return Utility.getConfiguration().get<string[]>('webResources', []);
+        return this.getConfiguration().get<string[]>('webResources', []);
     }
 
     public getTitle(): string[] {
-        return Utility.getConfiguration().get<string[]>('title', []);
+        return this.getConfiguration().get<string[]>('title', []);
     }
 
     public getNickname(): string {
-        return Utility.getConfiguration().get<string>('nickname', '');
+        return this.getConfiguration().get<string>('nickname', '');
     }
 
     public getGender(): number {
-        switch (Utility.getConfiguration().get<string>('gender', '')) {
+        switch (this.getConfiguration().get<string>('gender', '')) {
             case "男":
                 return 1;
             case "女":
@@ -134,7 +136,7 @@ export default class Asset {
     }
 
     public setNickname(name: string) {
-        let config = Utility.getConfiguration();
+        let config = this.getConfiguration();
         let setAsGlobal = true;
         let ins = config.inspect('nickname');
         if (ins) {
@@ -147,13 +149,13 @@ export default class Asset {
     public setGender(gender: number) {
         switch (gender) {
             case 1:
-                Utility.getConfiguration().update('gender', "男");
+                this.getConfiguration().update('gender', "男");
                 break;
             case 2:
-                Utility.getConfiguration().update('gender', "女");
+                this.getConfiguration().update('gender', "女");
                 break;
             default:
-                Utility.getConfiguration().update('gender', "保密");
+                this.getConfiguration().update('gender', "保密");
                 break;
         }
     }

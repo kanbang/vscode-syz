@@ -1,18 +1,13 @@
 'use strict';
 import * as vscode from 'vscode';
 import Asset from './asset';
-import * as child_process from "child_process";
 
 
 export class ReminderView {
     private static panelSyz: vscode.WebviewPanel | undefined;
     private static panelKedou: vscode.WebviewPanel | undefined;
 
-    public static openFolder(context: vscode.ExtensionContext, ) {
-        let asset: Asset = new Asset(context);
-        const path = asset.getLocalResPath();
-        this.openFile(path);
-    }
+
 
     public static show(context: vscode.ExtensionContext, ) {
         let asset: Asset = new Asset(context);
@@ -121,22 +116,4 @@ export class ReminderView {
     }
 
 
-    protected static openFile(filePath: string) {
-        if (process.platform === "win32") {
-            if (filePath.match(/^[a-zA-Z]:\\/)) {
-                // C:\ like url.
-                filePath = "file:///" + filePath;
-            }
-
-            if (filePath.startsWith("file:///")) {
-                return child_process.execFile("explorer.exe", [filePath]);
-            } else {
-                return child_process.exec(`start ${filePath}`);
-            }
-        } else if (process.platform === "darwin") {
-            child_process.execFile("open", [filePath]);
-        } else {
-            child_process.execFile("xdg-open", [filePath]);
-        }
-    }
 }
