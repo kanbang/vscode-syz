@@ -4,12 +4,11 @@
  * @Author: zhai
  * @Date: 2019-06-24 14:34:14
  * @LastEditors: zhai
- * @LastEditTime: 2021-04-28 18:26:20
+ * @LastEditTime: 2021-05-26 16:35:12
  */
 'use strict';
 
 import * as vscode from 'vscode';
-import { ReminderView } from './reminderView';
 
 import Asset from './asset';
 import { Reminder } from './util/reminder';
@@ -17,29 +16,32 @@ import { StatusBarItem } from 'vscode';
 import { Utility } from './util/utility';
 import * as path from 'path';
 import * as dialog from './util/webviewDialog';
+import * as fs from 'fs';
 
 let reminder: Reminder;
 let statusItemEnable: StatusBarItem;
 let statusItemMinutes: StatusBarItem;
+let asset: Asset;
+
 
 const reminderOnText = "$(pass) 燕姿在线";
 const reminderOffText = "$(circle-slash) 燕姿离线";
 // smiley
 
 export function activate(context: vscode.ExtensionContext) {
+    asset = new Asset(context);
 
     let disposables = [
 
         vscode.commands.registerCommand('kk.syz.remind', () => {
-            ReminderView.show(context);
+            showStefanie(context);
         }),
 
         vscode.commands.registerCommand('kk.syz.chat', () => {
-            showChat();
+            showChat(context);
         }),
-        
+
         vscode.commands.registerCommand('kk.syz.openPhotoFolder', () => {
-            let asset: Asset = new Asset(context);
             const path = asset.getLocalResPath();
             Utility.openFile(path);
         }),
@@ -94,7 +96,6 @@ export function activate(context: vscode.ExtensionContext) {
     context.subscriptions.push(...disposables);
 
     try {
-        let asset: Asset = new Asset(context);
         // vscode.window.showInformationMessage("sync start...");
         asset.syncFiles();
     } catch (error) {
@@ -131,6 +132,12 @@ function initReminder() {
 
     reminder = new Reminder(
         async () => {
+            let config = vscode.workspace.getConfiguration("syz");
+            let kedou = config.get<boolean>('kedou', true);
+            if (kedou) {
+                await vscode.commands.executeCommand('kk.syz.chat');
+            }
+
             await vscode.commands.executeCommand('kk.syz.remind');
         },
         (minutespass: number, minutes: number) => {
@@ -140,24 +147,105 @@ function initReminder() {
 
     reminder.minutes = minutes;
     reminder.enable = enable;
+
+    vscode.workspace.onDidChangeTextDocument((ev) => {
+		// console.log(ev);
+		if (reminder) {
+			reminder.active();
+		}
+	});
+
+	vscode.window.onDidChangeTextEditorSelection((ev) => {
+		// console.log(ev);
+		if (reminder) {
+			reminder.active();
+		}
+	});
+
+	vscode.window.onDidChangeTextEditorVisibleRanges((ev) => {
+		// console.log(ev);
+		if (reminder) {
+			reminder.active();
+		}
+	});
 }
 
 
-interface TestDialogResult {
+interface DialogResult {
     name: string;
 }
 
-async function showChat(): Promise<void> {
-    const testDir = path.resolve(__dirname, '../kedou');
+var dlg_chat: dialog.WebviewDialog<DialogResult> | null = null;
+var dlg_stefanie: dialog.WebviewDialog<DialogResult> | null = null;
 
-    const d = new dialog.WebviewDialog<TestDialogResult>('webview-kedou', testDir, 'index.html');
+async function showChat(context: vscode.ExtensionContext): Promise<void> {
+    if (dlg_chat) {
+        return;
+    }
 
-    const result: TestDialogResult | null = await d.getResult();
+    // const rootDir = path.resolve(__dirname, '../kedou');
+    const extPath = context.extensionPath;
+    const rootDir = path.join(extPath, 'kedou');
+
+    dlg_chat = new dialog.WebviewDialog<DialogResult>('webview-kedou', rootDir, '', 'index.html', vscode.ViewColumn.Beside,
+        (message) => {
+            switch (message.command) {
+                case 'setting':
+                    asset.setGender(message.gender);
+                    asset.setNickname(message.nickname);
+                    break;
+                default:
+                    break;
+            }
+        });
+
+    dlg_chat.postMessage({
+        command: 'setting',
+        gender: asset.getGender(),
+        nickname: asset.getNickname()
+    });
+
+    const result = await dlg_chat.getResult();
+    dlg_chat = null;
 
     if (result) {
-        vscode.window.showInformationMessage("Webview dialog result: " + JSON.stringify(result));
+        // vscode.window.showInformationMessage("Webview dialog result: " + JSON.stringify(result));
     } else {
-        vscode.window.showInformationMessage("The webview dialog was cancelled.");
+        // vscode.window.showInformationMessage("The webview dialog was cancelled.");
+    }
+}
+
+async function showStefanie(context: vscode.ExtensionContext): Promise<void> {
+    if (dlg_stefanie) {
+        return;
+    }
+
+    const title = asset.getTitle();
+
+    const extPath = context.extensionPath;
+    const rootDir = path.join(extPath, 'reminder');
+    const resourcePath = path.join(rootDir, 'index.html');
+    // const rootDir = path.dirname(resourcePath);
+
+    const strSlideSection = asset.getSlideSection(rootDir);
+
+    let html = fs.readFileSync(resourcePath, 'utf-8');
+    html = html.replace("<!-- ${strSlideSection} -->", strSlideSection);
+
+    var hello = JSON.stringify(title);
+    html = html.replace("<!-- ${hello} -->", hello);
+
+    // const testDir = path.resolve(__dirname, '../reminder');
+
+    dlg_stefanie = new dialog.WebviewDialog<DialogResult>('webview-kedou', rootDir, html, '');
+
+    const result = await dlg_stefanie.getResult();
+    dlg_stefanie = null;
+
+    if (result) {
+        // vscode.window.showInformationMessage("Webview dialog result: " + JSON.stringify(result));
+    } else {
+        // vscode.window.showInformationMessage("The webview dialog was cancelled.");
     }
 }
 

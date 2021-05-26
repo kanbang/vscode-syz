@@ -4,7 +4,7 @@
  * @Author: zhai
  * @Date: 2021-04-15 16:14:29
  * @LastEditors: zhai
- * @LastEditTime: 2021-04-28 15:32:46
+ * @LastEditTime: 2021-05-19 17:21:17
  */
 
 
@@ -24,7 +24,7 @@ export class Reminder {
     private _enable: boolean = false;
 
     constructor(
-        private _remind: cbRemind,
+        private _cbRemind: cbRemind,
         private _cbMin: cbMinutesChange,
         MAX_IDLE: number = 5) {
 
@@ -76,7 +76,7 @@ export class Reminder {
     }
 
     async remind() {
-        this._remind();
+        this._cbRemind();
         this.minutespass = 0;
     }
 

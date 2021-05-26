@@ -4,14 +4,19 @@
  * @Author: zhai
  * @Date: 2019-11-04 09:28:37
  * @LastEditors: zhai
- * @LastEditTime: 2020-10-26 18:08:26
+ * @LastEditTime: 2021-05-26 17:54:35
 -->
 
+
+## 0.1.13 (2021-05-26)
+* turn on/off reminder with statusbar button
+* set reminder interval with statusbar button
+* if not activity for five minutes, the timer will stop 
+* update photos (*^_^*)
 
 ## 0.1.12 (2020-10-26)
 * websocket which chat room used has been banned in webview. I'm trying to find another way...
 * update photos (*^_^*)
-
 
 ## 0.1.11 (2020-9-5)
 * update tadpole chat room

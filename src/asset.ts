@@ -7,6 +7,11 @@ import axios from 'axios';
 // import * as WebRequest from "web-request";
 
 
+function replaceAll(str: string, find: string, replace: string) {
+    var escapedFind = find.replace(/([.*+?^=!:${}()|\[\]\/\\])/g, "\\$1");
+    return str.replace(new RegExp(escapedFind, 'g'), replace);
+}
+
 export default class Asset {
     public readonly TYPE_URL_IMAGE = '网络链接';
     public readonly TYPE_DEFAULT = '本地图片';
@@ -14,7 +19,41 @@ export default class Asset {
     public constructor(public context: vscode.ExtensionContext) {
     }
 
-    public getSlideSection(): string {
+    public getSlideSection(root: string): string {
+        let images: vscode.Uri[] = this.getResFiles();
+        let strSlide = "";
+        for (var i = 0; i < images.length; ++i) {
+            let str = images[i].toString().toLowerCase();
+            // let imgpath = images[i];
+            let imgpath = path.relative(root, images[i].fsPath);
+            imgpath = "./" + replaceAll(imgpath, "\\", "/");
+
+            if (str.substring(str.length - 4) === ".mp4") {
+                strSlide += `
+                <section class="centering-wrapper">
+                <p><span class="animate-text"></span></p>
+                <video class="videobox" src="${imgpath}" autoplay="autoplay" loop="loop" preload="auto">
+                </section>
+                `;
+            }
+            else {
+                strSlide += `
+                <section class="centering-wrapper">
+                <p><span class="animate-text"></span></p>
+                <svg height="100%" width="100%">
+                    <image xlink:href="${imgpath}" height="100%" width="100%"/>
+                </svg>
+                </section>
+                `;
+            }
+        }
+        // 2020年8月27日 bug fix background-image方式不能显示图片了，换svg-image方式，自适应居中
+        //  <img class="imgbox" src="${images[i]}"/>
+        //  <div class="imgbox" style="background-image: url(${images[i]})"></div>
+        return strSlide;
+    }
+
+    public getSlideSection2(): string {
         let images: vscode.Uri[] = this.getResFiles();
         let strSlide = "";
 
@@ -84,15 +123,15 @@ export default class Asset {
     }
 
     public getLocalResPath() {
-        return path.join(this.context.extensionPath, 'images/syz');
+        return path.join(this.context.extensionPath, 'reminder/images/syz');
     }
 
     public getWebResPath() {
-        return path.join(this.context.extensionPath, 'images/web');
+        return path.join(this.context.extensionPath, 'reminder/images/web');
     }
 
     public getWebTmpPath() {
-        return path.join(this.context.extensionPath, 'images/tmp');
+        return path.join(this.context.extensionPath, 'reminder/images/tmp');
     }
 
     public getKedouPath() {
@@ -159,8 +198,6 @@ export default class Asset {
                 break;
         }
     }
-
-
 
     ////////////////////////////////////////////////////////////////////////////
     /**

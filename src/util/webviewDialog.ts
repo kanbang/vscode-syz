@@ -4,7 +4,7 @@
  * @Author: zhai
  * @Date: 2021-03-25 16:56:42
  * @LastEditors: zhai
- * @LastEditTime: 2021-04-28 17:58:13
+ * @LastEditTime: 2021-05-26 13:39:26
  */
 
 import * as vscode from 'vscode';
@@ -33,8 +33,10 @@ export class WebviewDialog<TResult> implements vscode.Disposable {
 	public constructor(
 		viewType: string,
 		resourceRootDir: string,
-		dialogHtmlFileName: string,
+		html: string,
+		htmlFileName: string,
 		viewColumn?: vscode.ViewColumn,
+		onMsg?: (e: any) => any
 	) {
 		viewColumn = viewColumn || vscode.ViewColumn.Beside;
 		const options: vscode.WebviewOptions | vscode.WebviewPanelOptions = {
@@ -44,8 +46,10 @@ export class WebviewDialog<TResult> implements vscode.Disposable {
 			]
 		};
 
-		const dialogHtmlFile = path.join(resourceRootDir, dialogHtmlFileName);
-		let html = fs.readFileSync(dialogHtmlFile, { encoding: 'utf8' });
+		if (!html || html.length === 0) {
+			const dialogHtmlFile = path.join(resourceRootDir, htmlFileName);
+			html = fs.readFileSync(dialogHtmlFile, { encoding: 'utf8' });
+		}
 
 		const title = this.extractHtmlTitle(html, 'Dialog');
 
@@ -61,6 +65,10 @@ export class WebviewDialog<TResult> implements vscode.Disposable {
 
 		// https://code.visualstudio.com/api/extension-guides/webview#scripts-and-message-passing
 		this.panel.webview.onDidReceiveMessage((message) => {
+			if (onMsg) {
+				onMsg(message);
+			}
+
 			if (message.command === 'cancel') {
 				this.panel.dispose();
 			} else if (message.command === 'result') {
@@ -68,6 +76,10 @@ export class WebviewDialog<TResult> implements vscode.Disposable {
 				this.panel.dispose();
 			}
 		});
+	}
+
+	public postMessage(message: any): Thenable<boolean> {
+		return this.panel.webview.postMessage(message);
 	}
 
 	/**
@@ -99,16 +111,16 @@ export class WebviewDialog<TResult> implements vscode.Disposable {
 	}
 
 	// 另一种实现
-	
+
 	// public getWebViewContent(templatePath: string): string {
-    //     const resourcePath = path.join(this.context.extensionPath, templatePath);
-    //     const dirPath = path.dirname(resourcePath);
-    //     let html = fs.readFileSync(resourcePath, 'utf-8');
-    //     html = html.replace(/(<link.+?href="|<script.+?src="|<img.+?src=")(.+?)"/g, (m, $1, $2) => {
-    //         return $1 + vscode.Uri.file(path.resolve(dirPath, $2)).with({ scheme: 'vscode-resource' }).toString() + '"';
-    //     });
-    //     return html;
-    // }
+	//     const resourcePath = path.join(this.context.extensionPath, templatePath);
+	//     const dirPath = path.dirname(resourcePath);
+	//     let html = fs.readFileSync(resourcePath, 'utf-8');
+	//     html = html.replace(/(<link.+?href="|<script.+?src="|<img.+?src=")(.+?)"/g, (m, $1, $2) => {
+	//         return $1 + vscode.Uri.file(path.resolve(dirPath, $2)).with({ scheme: 'vscode-resource' }).toString() + '"';
+	//     });
+	//     return html;
+	// }
 
 
 	/**

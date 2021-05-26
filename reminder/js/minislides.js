@@ -97,19 +97,19 @@ addEventListener('keydown', function (e, preventDefault) {
     }
 });
 
-addEventListener('wheel', function (e, preventDefault) {
-    if (e.wheelDelta > 0) {
+addEventListener('wheel', ev => {
+    if (ev.wheelDelta > 0) {
         setPage(currentPageNumber - 1);
     } else {
         setPage(currentPageNumber + 1);
     }
 
-    e.preventDefault();
+    // ev.preventDefault();
 });
 
-addEventListener('click', function (e, preventDefault) {
+addEventListener('click', ev => {
     setPage(currentPageNumber + 1);
-    e.preventDefault();
+    ev.preventDefault();
 });
 
 
@@ -147,9 +147,8 @@ function handleTouchMove(evt) {
         } else {
             setPage(currentPageNumber + 1);
         }
-        preventDefault = 1;
     } else {
-        if (yDiff < 0) { } else { }
+        if (yDiff < 0) {} else {}
     }
 
     xDown = null;

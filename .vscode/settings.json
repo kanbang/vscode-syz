@@ -11,5 +11,6 @@
     "syz.gender": "男",
     "kedou.gender": "女",
     "liveServer.settings.port": 5502,
-    "seat.enable": false
+    "seat.enable": false,
+    "seat.reminderIntervalInMinutes": 1
 }

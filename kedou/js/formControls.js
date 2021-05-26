@@ -1,5 +1,7 @@
 (function ($) {
 
+    var winfocus = false;
+
     $.fn.initChat = function () {
         var chartInput = this;
         var chatText = $("#chatText");
@@ -28,8 +30,10 @@
             if (is_panel_showing) return;
 
             setTimeout(function () {
-                chartInput.focus()
-            }, 1);
+                if (winfocus) {
+                    chartInput.focus()
+                }
+            }, 100);
         });
 
         chartInput.keydown(function (e) {
@@ -100,6 +104,8 @@
     $(function () {
         // $('#chat').initChat();
 
+        var chartInput = $('#chat');
+
         document.addEventListener('mousedown', (e) => {
             if (!is_panel_showing) {
                 chartInput.focus()
@@ -111,5 +117,15 @@
             }
         }, false);
 
+        // 允许其他窗口（工作区）获得焦点来操作
+        window.onfocus = () => {
+            winfocus = true;
+        };
+
+        window.onblur = () => {
+            winfocus = false;
+        };
+
     });
+
 })(jQuery);

@@ -2,11 +2,11 @@
     "name": "syz",
     "displayName": "燕姿鼓励师",
     "description": "写代码不再孤单，孙燕姿与你同在",
-    "version": "0.1.12",
+    "version": "0.1.13",
     "publisher": "kanbang",
     "icon": "logo.jpg",
     "engines": {
-        "vscode": "^1.36.0"
+        "vscode": "^1.55.0"
     },
     "categories": [
         "Other"
@@ -15,7 +15,8 @@
         "孙燕姿",
         "提醒",
         "鼓励",
-        "鼓励师"
+        "鼓励师",
+        "冷门歌手"
     ],
     "bugs": {
         "url": "https://github.com/kanbang/vscode-syz/issues",
@@ -39,7 +40,7 @@
             },
             {
                 "command": "kk.syz.chat",
-                "title": "打开约猿页面",
+                "title": "打开约猿︱媛页面",
                 "category": "syz"
             },
             {
@@ -63,7 +64,7 @@
                 "syz.enable": {
                     "type": "boolean",
                     "default": true,
-                    "description": "开启久坐提醒"
+                    "description": "开启提醒"
                 },
                 "syz.reminderIntervalInMinutes": {
                     "type": "number",
@@ -94,10 +95,10 @@
                     ],
                     "description": "页面内展示文字"
                 },
-                "syz.chat": {
+                "syz.kedou": {
                     "type": "boolean",
                     "default": true,
-                    "description": "启用蝌蚪聊聊"
+                    "description": "同时打开蝌蚪聊聊"
                 },
                 "syz.nickname": {
                     "type": "string",
